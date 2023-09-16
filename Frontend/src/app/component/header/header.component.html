@@ -1,0 +1,32 @@
+<div id="home"></div>
+<!-- navbar -->
+<nav class="navbg navbar navbar-expand-lg  text-light sticky-top" [ngClass]="{'scrolled': scrolled}">
+    <div class="container-fluid">
+      <a class="logo navbar-brand" href="#home"><img src="/assets/Icon.jpg" alt="Icon" srcset=""></a>
+      <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-light"></span>
+      </button>
+      <div class="collapse navbar-collapse " id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item ms-2">
+            <a class="button-31 nav-link active text-light" role="button" aria-current="page" href="#home"><span class="text"><i class="bi bi-house"></i> Home</span></a>
+          </li>
+          <li class="nav-item ms-2">
+            <a class="button-31 nav-link active text-light" role="button" aria-current="page" href="#footer"><span class="text"><i class="bi bi-phone"></i> Contact Us</span></a>
+          </li>
+          <li class="nav-item ms-2">
+            <div>
+              <div class="input-group w-auto search">
+                  <input type="text" class="form-control" placeholder="Search" aria-label="Example input" aria-describedby="button-addon1"/>
+                  <button class="btn btn-dark" type="button" id="button-addon1" data-mdb-ripple-color="dark"><i class="bi bi-search"></i></button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <button class="button-85 d-flex bd-highlight" role="button" routerLink="login"><span class="text"><i class="bi bi-box-arrow-in-right"></i> SignIn</span></button>
+      </div>
+    </div>
+</nav>
+
+<!-- Marquee -->
+<marquee>30% off on SBI Credit Cards.</marquee>
