@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-md-12">
+      <form action="index.html" method="post">
+        <h1> Edit Movie </h1>
+        <fieldset>
+            <label for="name">Movie Name:</label>
+            <input type="text" id="name" name="user_name">
+            
+            <label>Select Category:</label>
+                <input type="radio" id="under_13" value="under_13" name="user_age"><label for="under_13" class="light me-4">UA</label>
+                <input type="radio" id="over_13" value="over_13" name="user_age"><label for="over_13" class="light me-4">A</label>
+                <input type="radio" id="over_13" value="over_13" name="user_age"><label for="over_13" class="light me-4">PG</label>
+            <br><br>
+
+            <label for="job">Language:</label>
+            <select id="job" name="user_job">
+                <option value="frontend_developer">Malayalam</option>
+                <option value="php_developer">Hindi</option>
+                <option value="python_developer">Tamil</option>
+                <option value="rails_developer">Telugu</option>
+                <option value="web_designer">English</option>
+            </select>
+        
+            <label for="bio">Cast Details:</label>
+            <textarea id="bio" name="user_bio"></textarea>
+
+            <label for="bio">Description:</label>
+            <textarea id="bio" name="user_bio"></textarea>
+
+            <label for="name">Rating:</label>
+            <input type="text" id="name" name="user_name">
+
+            <label for="name">Seats:</label>
+            <input type="text" id="name" name="user_name">
+
+            <label for="name">Price:</label>
+            <input type="text" id="name" name="user_name">
+
+            <label for="job">Screen:</label>
+            <select id="job" name="user_job">
+                <option value="frontend_developer">Screen 1</option>
+                <option value="php_developer">Screen 2</option>
+                <option value="python_developer">Screen 3</option>
+                <option value="rails_developer">Screen 4</option>
+                <option value="web_designer">Screen 5</option>
+            </select>
+
+            <div class="center">
+                <div class="form-input">
+                  <div class="preview">
+                    <img id="file-ip-1-preview">
+                  </div>
+                  <label for="file-ip-1">Upload Poster</label>
+                  <input type="file" id="file-ip-1" accept="image/*" (change)="showPreview($event);">                  
+                </div>
+            </div>  
+        </fieldset>
+       
+        <button type="submit">Add</button>
+        
+       </form>
+    </div>
+</div>

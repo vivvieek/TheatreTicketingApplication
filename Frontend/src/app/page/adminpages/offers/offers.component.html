@@ -1,0 +1,24 @@
+<!-- Form to Input Notfication message -->
+<form  (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="notification" class="text-primary">Enter Notification Message</label>
+      <input type="text" class="form-control" id="notification" placeholder="Message..." name="notificationmess" >
+    </div>
+    <br>
+      <button type="submit" class="button-86"><i class="bi bi-cloud-upload"> Post</i></button>
+</form>
+
+<!-- Display of old notifications posted -->
+
+<p class="lead">
+    Previous Notifications
+</p>
+<div class="oldnotimess">
+    <ul class="list-group listing" >
+        <li class="list-group-item list-group-item-action" >
+            <i class="bi bi-bell"> Test </i>
+            <button class="button-48 float-end"  role="button"><span class="text"><i class="bi bi-calendar2-x"></i> Delete</span></button>
+        </li>
+    </ul>
+</div>
+<br>

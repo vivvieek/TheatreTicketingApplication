@@ -46,8 +46,8 @@ a {
 
 button {
 	border-radius: 20px;
-	border: 1px solid #522bff;
-	background-color: #2b52ff;
+	border: 1px solid #ff2b2b;
+	background-color: #ff2b2b;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -71,7 +71,7 @@ button.ghost {
 }
 
 form {
-	background-color: #FFFFFF;
+	background-color: #fa8787;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -90,7 +90,11 @@ input {
 }
 
 .container {
-	background-color: #fff;
+	/* background-color: #ffffff; */
+	background-image: url('/assets/Theatrewallpaper.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: 0 0;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
 			0 10px 10px rgba(0,0,0,0.22);
@@ -160,9 +164,7 @@ input {
 }
 
 .overlay {
-	background: #1e448a;
-	background: -webkit-linear-gradient(to right, #2b8eff, #418dff);
-	background: linear-gradient(to right, #2bb1ff, #418dff);
+	background-image: url('/assets/Theatrewallpaper.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 0;
@@ -210,19 +212,3 @@ input {
 .container.right-panel-active .overlay-right {
 	transform: translateX(20%);
 }
-
-.social-container {
-	margin: 20px 0;
-}
-
-.social-container a {
-	border: 1px solid #DDDDDD;
-	border-radius: 50%;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0 5px;
-	height: 40px;
-	width: 40px;
-}
-
