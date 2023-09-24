@@ -1,4 +1,5 @@
 import { Component, HostListener } from '@angular/core';
+import { ScrollService } from 'src/app/servicefiles/scroll.service';
 
 @Component({
   selector: 'app-header',
@@ -6,8 +7,11 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  scrolled: boolean = false;
+  
 
+  constructor(private scrollService: ScrollService) {}
+
+  scrolled: boolean = false;
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // Check the scroll position and update the opacity accordingly
@@ -16,6 +20,10 @@ export class HeaderComponent {
     } else {
       this.scrolled = false;
     }
+  }
+
+  scrollToBottom() {
+    this.scrollService.scrollToBottom();
   }
 
 }
