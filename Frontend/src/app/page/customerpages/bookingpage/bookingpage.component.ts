@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class BookingpageComponent {
 
+  isHighlighted: boolean = false;
+
+  highlightDiv() {
+    this.isHighlighted = !this.isHighlighted;
+  }
 }

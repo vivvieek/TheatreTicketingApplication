@@ -5,7 +5,9 @@
                     <img src="/assets/Missionimpossible.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title">Jailer</h5>
-                      <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
+
+                      <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
+                      <li class="list-group-item">Cast : John, Doe, Dwayne, Eminem</li>
                     </div>
                     <div class="container">
                         <div class="row">
@@ -13,60 +15,61 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Category : U/A</li>
                                     <li class="list-group-item">Language : Tamil</li>
-                                    <li class="list-group-item">Seats Left : 22</li>
-                                    <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-                                    <li class="list-group-item">Cast : John, Doe, Dwayne, Eminem</li>
-                                    <li class="list-group-item">Price : 220</li>
-                                    <li class="list-group-item">Screen : Screen 1</li>
+                                    <li class="list-group-item"><i class="bi bi-star"></i> 4.2</li>
+                                    <li class="list-group-item"></li>
                                   </ul>
                             </div>
                             <div class="col">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Category : U/A</li>
-                                    <li class="list-group-item">Language : Tamil</li>
                                     <li class="list-group-item">Seats Left : 22</li>
-                                    <li class="list-group-item">Cast : John, Doe, Dwayne, Eminem</li>
                                     <li class="list-group-item">Price : 220</li>
                                     <li class="list-group-item">Screen : Screen 1</li>
-                                    <li class="list-group-item">
-                                        
-                                    </li>
+                                    <li class="list-group-item"></li>
                                   </ul>
-                                <!-- <div class="col border">
-                                    <div class="booking-widget">
-                                        <form>
-                                            <ul class='booking-widget__form'>
-                                                <li>
-                        
-                                                        <label for='adultsAmount'>Select Number Of Seats</label>
-                                                        <div class='form-field form__dropdown text-center'> 
-                                                            <select id='adultsAmount'>    
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5">5</option>
-                                                                    <option value="6">6</option>
-                                                            </select>
-                                                            <div class='select-button'><i class="fa fa-caret-down" aria-hidden="true"></i></div>
-                                                        </div>
-                        
-                                                </li>
-                        
-                                                <li>
-                                                    <div>
-                                                        
-                                                    </div>
-                                                </li>
-                        
-                                                <li>
-                                                    <input type="submit" id='bookingSubmit' class='form__submit' value='Confirm'>
-                                                </li>
-                                            </ul>       
-                                        </form>
-                                    </div>
-                                </div> -->
                             </div> 
+                        </div>
+                        <div class="row">
+                            <div class="booking-widget">
+                                <div class='booking-widget__header'>
+                                    <button class="Availability">Available/ Fast Filling/ Housefull</button>
+                                </div>
+                                <form>
+                                    <ul class='booking-widget__form'>
+
+                                        <li>
+                                            <div class='form__dropdown'>
+                                                <label for='adultsAmount'>Select Number of Seats</label>
+                                                <div class='form-field'> 
+                                                    <select id='adultsAmount'>    
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                    </select>
+                                                    <div class='select-button' ><i class="bi bi-person-add"></i></div>
+                                                </div>
+                                                <span>Maximum 6 seats only</span>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class=' form-field form-field__checkbox'>
+                                                <input type="checkbox" (click)="highlightDiv()" id='flexibleDates' value="">
+                                            </div>
+                                            <label for="flexibleDates">I agree to all the **Terms and Conditions</label>
+                                        </li>
+                                        <li>
+                                            <input type="submit" id='bookingSubmit' class='form__submit' value='Book Now'>
+                                        </li>
+                                    </ul>       
+                                </form>
+                                <div id="h6" [ngClass]="{'highlighted': isHighlighted}">
+                                    **The seating arrangement for the theater comprises six rows, each containing five seats. Booking for seats follows the "first come, first served" rule, commencing from the last row on the right-hand side.
+                                    Customers are permitted to book a maximum of six tickets in a single transaction. If more than six tickets are required, a separate booking transaction is necessary. 
+                                </div>
+                            </div>
                         </div>
                     </div>
 
