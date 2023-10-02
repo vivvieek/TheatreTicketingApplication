@@ -23,45 +23,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
+        <tr *ngFor="let item of movie">
+          <th scope="row" >1</th>
           <td>
               <div>
                   <a >
-                    <img class="img-thumbnail" width="100" height="100" src="/assets/Missionimpossible.jpg" />
+                    <img class="img-thumbnail" width="100" height="100" src={{item.image}} />
                   </a>
               </div>
           </td>
-          <td>Mission impossible- Dead Reckoning Part 1</td>
-          <td>UA</td>
-          <td>English</td>
-          <td>Tom cruise, Hayley Atwell, Rebecca Ferguson</td>
-          <td>Ethan and his loyal friends Benji (Simon Pegg) and Luther (Ving Rhames) with skilled thief Grace (Hayley Atwell) to stop a rogue artificial intelligence called The Entity.</td>
-          <td>4.9</td>
-          <td>38/50</td>
-          <td>200</td>
-          <td>Screen 1</td>
-          <td><button class="button-8" routerLink="/editmovie" role="button">Edit</button></td>
-          <td><button class="button-8" role="button">Delete</button></td>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td>
-              <div>
-                  <a >
-                    <img class="img-thumbnail" width="100" height="100" src="/assets/Missionimpossible.jpg" />
-                  </a>
-              </div>
-          </td>
-          <td>Mission impossible- Dead Reckoning Part 1</td>
-          <td>UA</td>
-          <td>English</td>
-          <td>Tom cruise, Hayley Atwell, Rebecca Ferguson</td>
-          <td>Ethan and his loyal friends Benji (Simon Pegg) and Luther (Ving Rhames) with skilled thief Grace (Hayley Atwell) to stop a rogue artificial intelligence called The Entity.</td>
-          <td>4.9</td>
-          <td>38/50</td>
-          <td>200</td>
-          <td>Screen 1</td>
+          <td>{{item.name}}</td>
+          <td>{{item.category}}</td>
+          <td>{{item.language}}</td>
+          <td>{{item.cast}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.rating}}</td>
+          <td>{{item.seats}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.screen}}</td>
           <td><button class="button-8" routerLink="/editmovie" role="button">Edit</button></td>
           <td><button class="button-8" role="button">Delete</button></td>
         </tr>

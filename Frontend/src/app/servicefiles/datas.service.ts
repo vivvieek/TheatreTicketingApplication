@@ -29,7 +29,11 @@ export class DatasService {
     return this.http.get('http://localhost:3000/viewmess');
   }
 
-  addmovie(formData: FormData): Observable<any>{
-    return this.http.post('http://localhost:3000/addmovie',formData);
+  addmovie(formData: FormData) {
+    return this.http.post('http://localhost:3000/addmovie', formData);
+  }
+
+  getMovie() {
+    return this.http.get('http://localhost:3000/viewmovie');
   }
 }

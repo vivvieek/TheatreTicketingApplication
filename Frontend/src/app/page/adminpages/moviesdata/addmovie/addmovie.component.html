@@ -1,19 +1,19 @@
 <div class="row">
     <div class="col-md-12">
-      <form #addmovie="ngForm" (ngSubmit)="submit()" >
+      <form #addmovie="ngForm" (ngSubmit)="uploadmovie(formData)" >
         <h1> Add Movie </h1>
         <fieldset>
             <label for="name">Movie Name:</label>
-            <input type="text" id="name" name="name" required [(ngModel)]="movie.name" #name="ngModel" >
+            <input type="text" id="name" name="name" required [(ngModel)]="name" >
             
             <label>Select Category:</label>
-                <input type="radio" id="UA"  value="UA" name="category" [(ngModel)]="movie.category" #category="ngModel"><label for="UA" class="light me-4">UA</label>
-                <input type="radio" id="A" value="A" name="category" [(ngModel)]="movie.category" #category="ngModel"><label for="A" class="light me-4">A</label>
-                <input type="radio" id="PG" value="PG" name="category" [(ngModel)]="movie.category" #category="ngModel"><label for="PG" class="light me-4">PG</label>
+                <input type="radio" id="UA"  value="UA" name="category" [(ngModel)]="category" ><label for="UA" class="light me-4">UA</label>
+                <input type="radio" id="A" value="A" name="category" [(ngModel)]="category" ><label for="A" class="light me-4">A</label>
+                <input type="radio" id="PG" value="PG" name="category" [(ngModel)]="category" ><label for="PG" class="light me-4">PG</label>
             <br><br>
 
             <label for="language">Language:</label>
-            <select id="language" name="language" required [(ngModel)]="movie.language" #language="ngModel">
+            <select id="language" name="language" required [(ngModel)]="language" >
                 <option value="Malayalam">Malayalam</option>
                 <option value="Hindi">Hindi</option>
                 <option value="Tamil">Tamil</option>
@@ -22,22 +22,22 @@
             </select>
         
             <label for="cast">Cast Details:</label>
-            <textarea id="cast" name="cast" required [(ngModel)]="movie.cast" #cast="ngModel"></textarea>
+            <textarea id="cast" name="cast" required [(ngModel)]="cast" ></textarea>
 
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required [(ngModel)]="movie.description" #description="ngModel"></textarea>
+            <textarea id="description" name="description" required [(ngModel)]="description" ></textarea>
 
             <label for="rating">Rating:</label>
-            <input type="text" id="rating" name="rating" required [(ngModel)]="movie.rating" #rating="ngModel">
+            <input type="text" id="rating" name="rating" required [(ngModel)]="rating" >
 
             <label for="seats">Seats:</label>
-            <input type="text" id="seats" name="seats" required [(ngModel)]="movie.seats" #seats="ngModel">
+            <input type="text" id="seats" name="seats" required [(ngModel)]="seats">
 
             <label for="price">Price:</label>
-            <input type="text" id="price" name="price" required [(ngModel)]="movie.price" #price="ngModel">
+            <input type="text" id="price" name="price" required [(ngModel)]="price" >
 
             <label for="screen">Screen:</label>
-            <select id="screen" name="screen" required [(ngModel)]="movie.screen" #screen="ngModel">
+            <select id="screen" name="screen" required [(ngModel)]="screen" >
                 <option value="Screen 1">Screen 1</option>
                 <option value="Screen 2">Screen 2</option>
                 <option value="Screen 3">Screen 3</option>
@@ -51,7 +51,7 @@
                   <img id="file-ip-1-preview">
                 </div>
                 <label for="file-ip-1">Upload Poster</label>
-                <input type="file" id="file-ip-1" accept="image/*"  selectedFile (change)="showPreview($event);onFileSelected($event)" required>
+                <input type="file" id="file-ip-1" accept="image/*"  selectedFile (change)="showPreview($event);onFileChange($event)" required>
               </div>
             </div>
         </fieldset>

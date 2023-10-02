@@ -7,8 +7,8 @@ const movieSchema=new mongoose.Schema({
     cast: String,
     description: String,
     rating: String,
-    seats: Number,
-    price: Number,
+    seats: String,
+    price: String,
     screen: String,
     image: String,
 })

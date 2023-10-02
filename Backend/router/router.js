@@ -4,6 +4,7 @@ const cors = require('cors');
 const jwt = require ('jsonwebtoken');
 const multer = require('multer')
 
+
 const User=require("../model/customerschema");
 const Noti = require('../model/notificationschema');
 const Movie = require('../model/movieschema');
@@ -135,166 +136,41 @@ router.delete('/deletemess/:_id',(req, res) => {
 });
 
 // Add movie
-// POST: Upload item with description and image
-router.post('/addmovie', (req, res) => {
+const upload = multer({ dest: 'uploads' });
+router.post('/addmovie', upload.single('image'), async (req, res) => {
   console.log(req.body);
-  const newMovie = new Movie({
-    name:req.body.name,
-    category:req.body.category,
-    language:req.body.language,
-    cast:req.body.cast,
-    description:req.body.description,
-    rating:req.body.rating,
-    seats:req.body.seats,
-    price:req.body.price,
-    screen:req.body.screen,
-    image:req.body.image
-  });
 
-  newMovie.save().then((createdItem) => {
-    res.status(201).json({
-      message: 'Item added successfully',
-      item: createdItem,
+  try {
+    const newMovie = new Movie({
+      name: req.body.name,
+      category: req.body.category,
+      language: req.body.language,
+      cast: req.body.cast,
+      description: req.body.description,
+      rating: req.body.rating,
+      seats: req.body.seats,
+      price: req.body.price,
+      screen: req.body.screen,
+      image: req.file.path,
     });
-  }).catch((error) => {
-    res.status(500).json({
-      message: 'Item creation failed',
-      error: error,
-    });
-  });
+    await newMovie.save();
+    res.json({ message: 'Movie Added' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to Add Movie' });
+  }
 });
 
-
-
-
-
-
-
-// const storage = multer.diskStorage({
-//   destination: (req ,file , cb) => {
-//       cb(null , directory)
-//   },
-//   filename: (req , file ,cb) => {
-//       const filename = file.originalname.toLowerCase().split(' ').join('-')
-//       cb(null , filename)
-//   }
-// })
-
-// var upload = multer({
-//   storage: storage,
-//   limits: {
-//     fileSize: 1024 * 1024 * 5,
-//   },
-//   fileFilter: (req, file, cb) => {
-//     if (
-//       file.mimetype == 'image/png' ||
-//       file.mimetype == 'image/jpg' ||
-//       file.mimetype == 'image/jpeg'
-//     ) {
-//       cb(null, true)
-//     } else {
-//       cb(null, false)
-//       return cb(new Error('Only .png, .jpg and .jpeg format allowed!'))
-//     }
-//   },
-// })
-
-// router.post('/addmovie', upload.single('image'),async (req, res) => {
-//   try {
-//     const {name,category,language,cast,description,rating,seats,price,screen} = req.body;
-//     const image = {
-//       data: req.file.buffer,
-//       contentType: req.file.mimetype
-//     };
-//     const newMovie = new Movie({
-//       name,
-//       category,
-//       language,
-//       cast,
-//       description,
-//       rating,
-//       seats,
-//       price,
-//       screen,
-//       image,
-//     });
-//     await newMovie.save()
-//     res.status(200).json({ message: 'Movie Added' });
-//   } catch (err) {
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
-
-
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
-
-// router.post('/addmovie', (req, res) => {
-//   upload.single('image')(req, res, function (err) {
-//     try {
-//       if (err) {
-//         return res.status(400).json({ error: 'File upload failed.' });
-//       }
-
-//       const { name, category, language, cast, description, rating, seats, price, screen } = req.body;
-
-//       const image = {
-//         data: req.file.buffer,
-//         contentType: req.file.mimetype
-//       };
-
-//       const newMovie = new Movie({
-//         name,
-//         category,
-//         language,
-//         cast,
-//         description,
-//         rating,
-//         seats,
-//         price,
-//         screen,
-//         image,
-//       });
-
-//       newMovie.save()
-//         .then(() => {
-//           res.status(200).json({ message: 'Movie Added' });
-//         })
-//         .catch((error) => {
-//           res.status(500).json({ error: 'Failed to add Movie' });
-//         });
-//     } catch (err) {
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//   });
-// });
-
-// router.post('/addmovie',upload.single('image'),(req,res)=>{
-//   console.log(req.body);
-//   const newMovie=new Movie({
-//     name:req.body.name,
-//     category:req.body.category,
-//     language:req.body.language,
-//     cast:req.body.cast,
-//     description:req.body.description,
-//     rating:req.body.rating,
-//     seats:req.body.seats,
-//     price:req.body.price,
-//     screen:req.body.screen,
-//     image:req.body.image
-//   });
-//   newMovie.save()
-//     .then(()=>{
-//       res.status(200).json({message:'Movie Added'});
-//     })
-//     .catch((error)=>{
-//       res.status(500).json({error:'Failed to Movie'});
-//     })
-// })
-  
-
-
-
+// View movie
+router.get('/viewmovie',(req,res)=>{
+  Movie.find()
+  .then((movies)=>{
+    res.status(200).json(movies);
+  })
+  .catch((error)=>{
+    res.status(500).json({error:'Failed to Fetch'});
+  })
+});
 
 
 // token verification

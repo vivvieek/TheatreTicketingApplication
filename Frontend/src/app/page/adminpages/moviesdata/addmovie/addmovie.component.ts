@@ -9,21 +9,19 @@ import { DatasService } from 'src/app/servicefiles/datas.service';
 })
 export class AddmovieComponent {
 
+    formData= new FormData();
+    name='';
+    category='';
+    language='';
+    cast='';
+    description='';
+    rating='';
+    seats='';
+    price='';
+    screen='';
+    // image='';
 
-  movie={
-    name:'',
-    category:'',
-    language:'',
-    cast:'',
-    description:'',
-    rating:'',
-    seats:'',
-    price:'',
-    screen:'',
-    image:'',
-  }
 
-  selectedFile: File | null = null; // To store the selected image file
 
   constructor(private serv:DatasService, private router:Router){}
 
@@ -37,38 +35,33 @@ export class AddmovieComponent {
     }
   }
 
-  // onFileSelected(event:any): void {
-  //   this.selectedFile = event.target.files[0];
-  // }
-
-  onFileSelected(event: any) {
-    if (event.target.files.length > 0) {
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length) {
       const file = event.target.files[0];
-      this.movie.image = file;
+      this.formData.set('image', file);
     }
   }
 
-  submit() {
-    const formData = new FormData();
-    formData.append('image', this.movie.image);
-    formData.append('name', this.movie.name);
-    formData.append('category', this.movie.category);
-    formData.append('language', this.movie.language);
-    formData.append('screen', this.movie.screen);
-    formData.append('price', this.movie.price);
-    formData.append('seats', this.movie.seats);
-    formData.append('rating', this.movie.rating);
-    formData.append('description', this.movie.description);
-    formData.append('cast', this.movie.cast);
 
-    this.serv.addmovie(formData).subscribe((res) => {
-      alert("Movie Added");
-      this.router.navigate(['']);
-    },
-    (error) => {
-      console.error('Item upload failed:', error);
-    }
+  uploadmovie(formData: FormData) {
+    formData.append('description', this.description);
+    formData.append('name', this.name);
+    formData.append('category', this.category);
+    formData.append('language', this.language);
+    formData.append('cast', this.cast);
+    formData.append('rating', this.rating);
+    formData.append('seats', this.seats);
+    formData.append('price', this.price);
+    formData.append('screen', this.screen);
+
+    this.serv.addmovie(formData).subscribe(
+      (response) => {
+        this.router.navigate(['movielist']);
+        console.log('Image uploaded successfully:', response);
+      },
+      (error) => {
+        console.error('Error uploading image:', error);
+      }
     );
   }
-
 }
