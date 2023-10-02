@@ -1,14 +1,17 @@
 // Movie Schema
 const mongoose = require('mongoose');
-const studentSchema=new mongoose.Schema({
-    id: String,
+const movieSchema=new mongoose.Schema({
     name: String,
-    course: String,
-    project: String,
-    batch: String,
-    status: String,
-    placement: String,
+    category: String,
+    language: String,
+    cast: String,
+    description: String,
+    rating: String,
+    seats: Number,
+    price: Number,
+    screen: String,
+    image: String,
 })
 
-const Student=mongoose.model('Studentdetail',studentSchema);
-module.exports =Student;
+const Movie=mongoose.model('movie',movieSchema);
+module.exports =Movie;

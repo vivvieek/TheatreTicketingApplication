@@ -104,3 +104,9 @@
   opacity: 1;
   transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
 }
+
+.main{
+  background-color: #f5f6f800 !important;
+  height: 100vh;
+  
+}

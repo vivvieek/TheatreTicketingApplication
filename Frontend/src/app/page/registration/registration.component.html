@@ -1,24 +1,53 @@
 <!-- Form to sign in or sign up -->
 <div class="container mt-5 mb-5" id="container">
 	<div class="form-container sign-up-container">
-		<form action="#">
-			<h1>Create Account</h1>
-			<span>use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<input type="password" placeholder="Repeat Password" />
-			<button>Sign Up</button>
+		<form #register="ngForm" (ngSubmit)="submit()" >
+			<h1>Register</h1>
+			<input type="text" placeholder="Name" name="name"  [(ngModel)]="userdetail.name" #name="ngModel" [class.is-invalid]="name.invalid&&name.touched" required pattern="^[A-Za-z ]+$">
+				<span *ngIf="name.touched &&name.errors?.['required']" class="error-message" >Name is required.</span>
+				<span *ngIf="name.touched &&name.errors?.['pattern']" class="error-message">Name must not contain special characters or digits</span>
+				<span *ngIf="name.touched &&!name.errors?.['pattern']&&!name.errors?.['required']" class="success-message">Valid</span>
+				<br *ngIf="name.untouched">
+			<input type="email" placeholder="Email" id="email" name="email" required [(ngModel)]="userdetail.email" #email="ngModel" [class.is-invalid]="email.invalid&&email.touched" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
+				<span *ngIf="email.touched &&email.errors?.['required']" class="error-message" >Mail ID is required.</span>
+				<span *ngIf="email.touched &&email.errors?.['pattern']" class="error-message">Enter a Valid Email.</span>
+				<span *ngIf="email.touched &&!email.errors?.['pattern']&&!email.errors?.['required']" class="success-message">Valid</span>
+				<br *ngIf="email.untouched">
+			<input type="password" placeholder="Password" name="password"  required [(ngModel)]="userdetail.password" #password="ngModel" [class.is-invalid]="password.invalid&&password.touched" required pattern="^[a-zA-Z0-9]{6,10}$">
+				<span *ngIf="password.touched &&password.errors?.['required']" class="error-message" >Password is required.</span>
+				<span *ngIf="password.touched &&password.errors?.['pattern']" class="error-message">Min 6 and Max 10 char. No Special Characters.</span>
+				<span *ngIf="password.touched &&!password.errors?.['pattern']&&!password.errors?.['required']" class="success-message">Valid</span>
+				<br *ngIf="password.untouched">
+			<input type="password" placeholder="Repeat Password" name="repeatPassword" #repeatPassword="ngModel" [(ngModel)]="userdetail.repeatPassword"  [class.is-invalid]="repeatPassword.invalid && repeatPassword.touched" required>
+				<span *ngIf="repeatPassword.touched && repeatPassword.errors?.['required']" class="error-message">Password is required.</span>
+				<span *ngIf="repeatPassword.touched && userdetail.password !== userdetail.repeatPassword" class="error-message">Passwords do not match.</span>
+				<span *ngIf="repeatPassword.touched && !repeatPassword.errors?.['required'] && userdetail.password === userdetail.repeatPassword" class="success-message">Passwords match</span>
+				<br *ngIf="repeatPassword.untouched">
+				<br>
+			<button type="submit" [disabled]="register.invalid">Sign Up</button>
+			<br>
 		</form>
 	</div>
+
 	<div class="form-container sign-in-container">
-		<form action="#">
-			<h1>Sign in</h1>
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign In</button>
+		<form #login="ngForm" (ngSubmit)="submit2()">
+			 <h1>Sign in</h1>
+			<!-- <input type="email" placeholder="Enter Email" id="emailInput" name="emailInput" required #emailInput="ngModel" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"> -->
+			<input type="email" placeholder="Enter Email" id="emailInput" name="emailInput" required [(ngModel)]="user.emailInput" #emailInput="ngModel"	 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
+				<span *ngIf="emailInput.touched &&emailInput.errors?.['required']" class="error-message" >Mail ID is required.</span>
+				<span *ngIf="emailInput.touched &&emailInput.errors?.['pattern']" class="error-message">Enter a Valid Email.</span>
+				<span *ngIf="emailInput.touched &&!emailInput.errors?.['pattern']&&!emailInput.errors?.['required']" class="success-message">Valid</span>
+				<br *ngIf="emailInput.untouched">
+			<input type="password" placeholder="Enter Password"	 id="passwordInput" name="passwordInput" required	 minlength="6"	 maxlength="10"	 [(ngModel)]="user.passwordInput"	#passwordInput="ngModel">
+				<span *ngIf="passwordInput.touched &&passwordInput.errors?.['required']" class="error-message" >Password is required.</span>
+				<span *ngIf="passwordInput.touched &&passwordInput.errors?.['pattern']" class="error-message">Min 6 and Max 10 char. No Special Characters.</span>
+				<span *ngIf="passwordInput.touched &&!passwordInput.errors?.['pattern']&&!passwordInput.errors?.['required']" class="success-message">Valid</span>
+				<br *ngIf="passwordInput.untouched">
+				<br>
+			<button type="submit" [disabled]="login.invalid">Sign In</button> 
 		</form>
 	</div>
+
 	<div class="overlay-container">
 		<div class="overlay">
 			<div class="overlay-panel overlay-left">

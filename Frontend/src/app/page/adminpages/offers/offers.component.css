@@ -145,3 +145,9 @@ ul{
   z-index: 1;
   position: relative;
 }
+
+.main{
+  background-color: #f5f6f800 !important;
+  height: 100vh;
+  
+}

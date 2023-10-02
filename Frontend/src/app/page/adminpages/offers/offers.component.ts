@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NotificationService } from 'src/app/servicefiles/notification.service';
+import { DatasService } from 'src/app/servicefiles/datas.service';
 
 
 @Component({
@@ -16,34 +16,35 @@ export class OffersComponent {
 
   notifications:any;
 
-  constructor(public serv:NotificationService){}
+  constructor(public serv:DatasService){}
 
   ngOnInit():void{
-    // this.fetchmessage();
+    this.fetchmessage();
   }
 
   submit() {
-    // this.serv.addmessage(this.notification).subscribe(res => {
-    //   alert('Message posted on homepage');
-    //   this.notification = {
-    //     notificationmess: ''
-    //   };
-    //   this.fetchmessage();
-    // });
+    this.serv.addmessage(this.notification).subscribe(res => {
+      alert('Message posted on homepage');
+      this.notification = {
+        notificationmess: ''
+      };
+      window.location.reload();
+      this.fetchmessage();
+    });
   }
 
-  // delmess(id: any) {
-  //   this.serv.delmessage(id).subscribe(data => console.log(data));
-  //   alert('Message deleted');
-  //   this.fetchmessage();
-  // }
+  delmess(id: any) {
+    this.serv.delmessage(id).subscribe(data => console.log(data));
+    alert('Message deleted');
+    window.location.reload();
+    this.fetchmessage();
+  }
 
-  // Get Messages
-  // fetchmessage(): void {
-  //   this.serv.viewmessage().subscribe(data => {
-  //     this.notifications = data;
-  //     console.log(this.notifications);
-  //   });
-  // }
+  fetchmessage(): void {
+    this.serv.viewmessage().subscribe(data => {
+      this.notifications = data;
+      console.log(this.notifications);
+    });
+  }
 
 }

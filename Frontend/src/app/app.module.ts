@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+
+
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +21,9 @@ import { BookingpageComponent } from './page/customerpages/bookingpage/bookingpa
 import { CustomerdataComponent } from './page/adminpages/customerdata/customerdata.component';
 import { OffersComponent } from './page/adminpages/offers/offers.component';
 import { RatingComponent } from './page/customerpages/rating/rating.component';
-
+import { CommonModule } from '@angular/common';
+import { LoginService } from './servicefiles/login.service';
+import { DatasService } from './servicefiles/datas.service';
 
 @NgModule({
   declarations: [
@@ -39,10 +46,14 @@ import { RatingComponent } from './page/customerpages/rating/rating.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    CommonModule
     
   ],
-  providers: [],
+  providers: [LoginService,
+    DatasService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

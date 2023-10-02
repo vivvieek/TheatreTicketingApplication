@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ElementRef } from '@angular/core';
+import { LoginService } from 'src/app/servicefiles/login.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -8,7 +11,22 @@ import { ElementRef } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private el: ElementRef) {}
+  buttoncontrol=true;
+  userdetail={
+    name : '',
+    email: '',
+    password: '',
+    repeatPassword:'',
+    movieBooked: '',
+    seatsBooked: '',
+  }
+
+  user={
+    emailInput:'',
+    passwordInput:''
+  }
+
+  constructor(private el: ElementRef, private router:Router, private serv:LoginService) {}
 
   ngOnInit() {
     const signUpButton = this.el.nativeElement.querySelector('#signUp');
@@ -23,4 +41,24 @@ export class RegistrationComponent implements OnInit {
       container.classList.remove("right-panel-active");
     });
   }
+
+  submit(){
+    this.serv.adduser(this.userdetail).subscribe((res=>{
+      alert("Registered Successfully. Now Please Login")
+      window.location.reload();
+    }))
+  }
+
+  submit2(){
+    this.serv.login(this.user).subscribe((res=>{
+      alert("Login Successful")
+      const newRoute = '';
+      window.location.href = newRoute;
+    }),
+    (error=>{
+      alert('Invalid credentials');
+    }))
+  }
+
+
 }

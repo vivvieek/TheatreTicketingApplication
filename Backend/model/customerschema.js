@@ -4,6 +4,8 @@ const userSchema = new mongoose.Schema({
   name : String,
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  moviebooked: String,
+  seatsbooked: String
 });
 
 const User = mongoose.model('User', userSchema);

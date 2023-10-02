@@ -9,6 +9,7 @@
       <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item ms-2">
+            <a href=""></a>
             <a class="button-31 nav-link active text-light" role="button" aria-current="page" href="#home"><span class="text"><i class="bi bi-house"></i> Home</span></a>
           </li>
           <li class="nav-item ms-2">
@@ -16,28 +17,32 @@
           </li>
           <!-- For admin -->
           <li class="nav-item ms-2">
-            <a class="button-31 nav-link active text-light" role="button" aria-current="page" routerLink="movielist"><span class="text"><i class="bi bi-film"></i> Movies Data</span></a>
+            <a class="button-31 nav-link active text-light" *ngIf="isAdmin" role="button" aria-current="page" routerLink="movielist"><span class="text"><i class="bi bi-film"></i> Movies Data</span></a>
           </li>
           <li class="nav-item ms-2">
-            <a class="button-31 nav-link active text-light" role="button" aria-current="page" routerLink="customerdata"><span class="text"><i class="bi bi-people-fill"></i> Customer Data</span></a>
+            <a class="button-31 nav-link active text-light" *ngIf="isAdmin" role="button" aria-current="page" routerLink="customerdata"><span class="text"><i class="bi bi-people-fill"></i> Customer Data</span></a>
           </li>
           <li class="nav-item ms-2">
-            <a class="button-31 nav-link active text-light" role="button" aria-current="page" routerLink="offers"><span class="text"><i class="bi bi-star"></i> Offers</span></a>
+            <a class="button-31 nav-link active text-light" *ngIf="isAdmin" role="button" aria-current="page" routerLink="offers"><span class="text"><i class="bi bi-star"></i> Offers</span></a>
           </li>
           <!-- for customer -->
           <li class="nav-item ms-2">
-            <a class="button-31 nav-link active text-light" role="button" aria-current="page" routerLink="customeracc"><span class="text"><i class="bi bi-bookmark-star"></i> My Account</span></a>
+            <a class="button-31 nav-link active text-light" *ngIf="isCustomer" role="button" aria-current="page" routerLink="customeracc"><span class="text"><i class="bi bi-bookmark-star"></i> My Account</span></a>
           </li>
-          <!-- <li class="nav-item ms-2"> -->
-            <!-- <a class="button-31 nav-link active text-light" role="button" aria-current="page" routerLink="rate"><span class="text"><i class="bi bi-clock-history"></i> Rate Movies</span></a> -->
-          <!-- </li> -->
+          <li class="nav-item ms-2">
+            <a class="button-31 nav-link active text-light" *ngIf="isCustomer" role="button" aria-current="page" routerLink="rate"><span class="text"><i class="bi bi-clock-history"></i> Rate Movies</span></a>
+          </li>
         </ul>
-        <button class="button-85 d-flex bd-highlight" role="button" routerLink="login"><span class="text"><i class="bi bi-box-arrow-in-right"></i> SignIn</span></button>
+        <button class="button-85 d-flex bd-highlight" *ngIf="isSignin" role="button" routerLink="login"><span class="text"><i class="bi bi-box-arrow-in-right"></i> SignIn</span></button>
+        <button class="button-85 d-flex bd-highlight" *ngIf="isSignout" role="button" (click)="logOut()"><span class="text"><i class="bi bi-box-arrow-in-right"></i> SignOut</span></button>
       </div>
     </div>
 </nav>
 
 <!-- Marquee -->
-<marquee>30% off on SBI Credit Cards.
-  All Movies will be played on respective screens at the same time 9:30am 1:30pm 6:30pm 10:15pm.
+<marquee>
+  <ng-container *ngFor="let item of notification">
+    {{ item.notificationmess }}
+    <span> | </span>
+  </ng-container>
 </marquee>

@@ -1,27 +1,28 @@
-<!-- Form to Input Notfication message -->
-<form  (ngSubmit)="submit()">
-    <div class="form-group">
-      <label for="notification" class="text-primary">Enter Notification Message</label>
-      <input type="text" class="form-control" id="notification" placeholder="Message..." name="notificationmess" >
+<div class="main">
+    <!-- Form to Input Notfication message -->
+    <form  (ngSubmit)="submit()">
+        <div class="form-group">
+        <label for="notification" class="text-primary">Enter Notification Message</label>
+        <input type="text" class="form-control" id="notification" placeholder="Message..." name="notificationmess" [(ngModel)]="notification.notificationmess" #notificationmess="ngModel">
+        </div>
+        <br>
+        <button type="submit" class="button-86"><i class="bi bi-cloud-upload"> Post</i></button>
+    </form>
+
+    <!-- Display of old notifications posted -->
+
+    <p class="lead">
+        Previous Notifications
+    </p>
+    <div class="oldnotimess ">
+        <ul class="list-group listing" >
+            <li class="list-group-item list-group-item-action" *ngFor="let item of notifications">
+                <i class="bi bi-bell"> {{item.notificationmess}}</i>
+                <button class="button-48 float-end" (click)="delmess(item._id)"   role="button"><span class="text"><i class="bi bi-calendar2-x"></i> Delete</span></button>
+            </li>
+        </ul>
     </div>
     <br>
-      <button type="submit" class="button-86"><i class="bi bi-cloud-upload"> Post</i></button>
-</form>
-
-<!-- Display of old notifications posted -->
-
-<p class="lead">
-    Previous Notifications
-</p>
-<div class="oldnotimess">
-    <ul class="list-group listing" >
-        <li class="list-group-item list-group-item-action" >
-            <i class="bi bi-bell"> 30% off on SBI Credit Cards. All Movies will be played on respective screens at the same time 9:30am 1:30pm 6:30pm 10:15pm. </i>
-            <button class="button-48 float-end"  role="button"><span class="text"><i class="bi bi-calendar2-x"></i> Delete</span></button>
-        </li>
-    </ul>
 </div>
-<br>
-
 
 <app-footer ></app-footer>
