@@ -15,7 +15,8 @@
           <th scope="col">Cast</th>
           <th scope="col">Description</th>
           <th scope="col">Rating</th>
-          <th scope="col">Ticket booked</th>
+          <th scope="col">Seats</th>
+          <th scope="col">Seats Booked</th>
           <th scope="col">Ticket Price</th>
           <th scope="col">Screen</th>
           <th scope="col">Edit</th>
@@ -39,10 +40,11 @@
           <td>{{item.description}}</td>
           <td>{{item.rating}}</td>
           <td>{{item.seats}}</td>
+          <td>{{item.seatsbooked}}</td>
           <td>{{item.price}}</td>
           <td>{{item.screen}}</td>
-          <td><button class="button-8" routerLink="/editmovie" role="button">Edit</button></td>
-          <td><button class="button-8" role="button">Delete</button></td>
+          <td><button class="button-8" (click)="edititem(item._id)" role="button">Edit</button></td>
+          <td><button class="button-8" role="button" (click)="delmovie(item._id)">Delete</button></td>
         </tr>
       </tbody>
     </table>

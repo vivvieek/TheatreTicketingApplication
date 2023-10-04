@@ -4,7 +4,6 @@ const cors = require('cors');
 const jwt = require ('jsonwebtoken');
 const multer = require('multer')
 
-
 const User=require("../model/customerschema");
 const Noti = require('../model/notificationschema');
 const Movie = require('../model/movieschema');
@@ -136,10 +135,37 @@ router.delete('/deletemess/:_id',(req, res) => {
 });
 
 // Add movie
-const upload = multer({ dest: 'uploads' });
+const directory='./images'
+const storage=multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null,directory)
+  },
+  filename:(req,file,cb)=>{
+    const filename=file.originalname.toLowerCase().split(' ').join('-')
+    cb(null,filename)
+  }
+})
+var upload=multer({
+  storage:storage,
+  limits:{
+    fileSize:1024*1024*10,
+  },
+  fileFilter:(req,file,cb)=>{
+    if(
+      file.mimetype=='image/png'||
+      file.mimetype=='image/jpg'||
+      file.mimetype=='image/jpeg'
+    ){
+      cb(null,true)
+    } else{
+      cb(null,false)
+      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'))
+    }
+  }
+})
 router.post('/addmovie', upload.single('image'), async (req, res) => {
   console.log(req.body);
-
+  const url=req.protocol + '://' + req.get('host');
   try {
     const newMovie = new Movie({
       name: req.body.name,
@@ -151,7 +177,7 @@ router.post('/addmovie', upload.single('image'), async (req, res) => {
       seats: req.body.seats,
       price: req.body.price,
       screen: req.body.screen,
-      image: req.file.path,
+      image: url+'/images/'+req.file.filename,
     });
     await newMovie.save();
     res.json({ message: 'Movie Added' });
@@ -162,16 +188,67 @@ router.post('/addmovie', upload.single('image'), async (req, res) => {
 });
 
 // View movie
-router.get('/viewmovie',(req,res)=>{
-  Movie.find()
-  .then((movies)=>{
-    res.status(200).json(movies);
-  })
-  .catch((error)=>{
-    res.status(500).json({error:'Failed to Fetch'});
-  })
+router.get('/viewmovie', async (req, res) => {
+  try {
+    const movies = await Movie.find();
+    res.json(movies);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch movies' });
+  }
 });
 
+// Get one movie
+router.get('/getonemovie/:_id', async (req, res) => {
+  try {
+    const movie = await Movie.findById(req.params._id);
+    res.status(200).json(movie);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error retrieving data');
+  }
+});
+
+// Edit movie
+router.put('/editmovie/:_id', async (req, res) => {
+  try {
+      let id = req.params._id
+      let updateData = {$set: req.body}
+      const updated = await Movie.findByIdAndUpdate(id, updateData,{ new: true })
+      res.json(updated)
+  } catch (error) {
+      console.log(error)
+      res.send('error')
+  }
+})
+
+// Delete Movie
+router.delete('/deletemovie/:_id',(req, res) => {
+  Movie.findByIdAndRemove(req.params._id)
+  .then((movie)=>{
+    if (movie){
+      res.status(200).json({message:'movie deleted successfully'});
+    }else{
+      res.status(404).json({error:'movie not found'});
+    }
+  })
+  .catch((error)=>{
+    res.status(500).json({error:'Failed to delete movie'});
+  });
+});
+
+// Book Movie
+router.put('/bookmovie/:_id', async (req, res) => {
+  try {
+      let id = req.params._id
+      let updateData = {$set: req.body}
+      const updated = await Movie.findByIdAndUpdate(id, updateData,{ new: true })
+      res.json(updated)
+  } catch (error) {
+      console.log(error)
+      res.send('error')
+  }
+})
 
 // token verification
 // function verifytoken(req,res,next){

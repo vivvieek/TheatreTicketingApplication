@@ -4,26 +4,26 @@
                 <div class="card" style="width: 18rem;">
                     <img src="/assets/Missionimpossible.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                      <h5 class="card-title">Jailer</h5>
+                      <h5 class="card-title">{{item.name}}</h5>
 
-                      <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-                      <li class="list-group-item">Cast : John, Doe, Dwayne, Eminem</li>
+                      <li class="list-group-item">{{item.description}}</li>
+                      <li class="list-group-item">{{item.cast}}</li>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Category : U/A</li>
-                                    <li class="list-group-item">Language : Tamil</li>
-                                    <li class="list-group-item"><i class="bi bi-star"></i> 4.2</li>
+                                    <li class="list-group-item">Category : {{item.category}}</li>
+                                    <li class="list-group-item">Language : {{item.language}}</li>
+                                    <li class="list-group-item"><i class="bi bi-star"></i> {{item.rating}}</li>
                                     <li class="list-group-item"></li>
                                   </ul>
                             </div>
                             <div class="col">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Seats Left : 22</li>
-                                    <li class="list-group-item">Price : 220</li>
-                                    <li class="list-group-item">Screen : Screen 1</li>
+                                    <li class="list-group-item">Seats Left : {{item.seats}}</li>
+                                    <li class="list-group-item">Price : {{item.price}}</li>
+                                    <li class="list-group-item">Screen : {{item.screen}}</li>
                                     <li class="list-group-item"></li>
                                   </ul>
                             </div> 
@@ -31,16 +31,18 @@
                         <div class="row">
                             <div class="booking-widget">
                                 <div class='booking-widget__header'>
-                                    <button class="Availability">Available/ Fast Filling/ Housefull</button>
+                                    <button *ngIf="getAvailabilityStatus() === 'available'" class="availabe">Available</button>
+                                    <button *ngIf="getAvailabilityStatus() === 'fastfilling'" class="fastflling">Fast Filling</button>
+                                    <button *ngIf="getAvailabilityStatus() === 'housefull'" class="housefull">Housefull</button>
                                 </div>
-                                <form>
+                                <form [formGroup]="bookticket" (ngSubmit)="onsubmit()">
                                     <ul class='booking-widget__form'>
 
                                         <li>
                                             <div class='form__dropdown'>
-                                                <label for='adultsAmount'>Select Number of Seats</label>
+                                                <label for='seats'>Select Number of Seats</label>
                                                 <div class='form-field'> 
-                                                    <select id='adultsAmount'>    
+                                                    <select id='seats' [(ngModel)]="seatsSelected" (change)="updateSeatsBooked()">    
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>

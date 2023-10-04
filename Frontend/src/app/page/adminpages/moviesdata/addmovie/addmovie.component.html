@@ -1,19 +1,19 @@
 <div class="row">
     <div class="col-md-12">
-      <form #addmovie="ngForm" (ngSubmit)="uploadmovie(formData)" >
+      <form [formGroup]="datasService.form" (submit)="onSubmit()" >
         <h1> Add Movie </h1>
         <fieldset>
             <label for="name">Movie Name:</label>
-            <input type="text" id="name" name="name" required [(ngModel)]="name" >
-            
+            <input type="text" id="name" formControlName="name" required  >
+
             <label>Select Category:</label>
-                <input type="radio" id="UA"  value="UA" name="category" [(ngModel)]="category" ><label for="UA" class="light me-4">UA</label>
-                <input type="radio" id="A" value="A" name="category" [(ngModel)]="category" ><label for="A" class="light me-4">A</label>
-                <input type="radio" id="PG" value="PG" name="category" [(ngModel)]="category" ><label for="PG" class="light me-4">PG</label>
+                <input type="radio" id="UA"  value="UA" formControlName="category"  ><label for="UA" class="light me-4">UA</label>
+                <input type="radio" id="A" value="A" formControlName="category"  ><label for="A" class="light me-4">A</label>
+                <input type="radio" id="PG" value="PG" formControlName="category"  ><label for="PG" class="light me-4">PG</label>
             <br><br>
 
             <label for="language">Language:</label>
-            <select id="language" name="language" required [(ngModel)]="language" >
+            <select id="language" formControlName="language"  >
                 <option value="Malayalam">Malayalam</option>
                 <option value="Hindi">Hindi</option>
                 <option value="Tamil">Tamil</option>
@@ -22,22 +22,22 @@
             </select>
         
             <label for="cast">Cast Details:</label>
-            <textarea id="cast" name="cast" required [(ngModel)]="cast" ></textarea>
+            <textarea id="cast" formControlName="cast"  ></textarea>
 
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required [(ngModel)]="description" ></textarea>
+            <textarea id="description" formControlName="description"  ></textarea>
 
             <label for="rating">Rating:</label>
-            <input type="text" id="rating" name="rating" required [(ngModel)]="rating" >
+            <input type="text" id="rating" formControlName="rating"  >
 
             <label for="seats">Seats:</label>
-            <input type="text" id="seats" name="seats" required [(ngModel)]="seats">
+            <input type="text" id="seats" formControlName="seats" >
 
             <label for="price">Price:</label>
-            <input type="text" id="price" name="price" required [(ngModel)]="price" >
+            <input type="text" id="price" formControlName="price"  >
 
             <label for="screen">Screen:</label>
-            <select id="screen" name="screen" required [(ngModel)]="screen" >
+            <select id="screen" formControlName="screen" required  >
                 <option value="Screen 1">Screen 1</option>
                 <option value="Screen 2">Screen 2</option>
                 <option value="Screen 3">Screen 3</option>
@@ -51,7 +51,7 @@
                   <img id="file-ip-1-preview">
                 </div>
                 <label for="file-ip-1">Upload Poster</label>
-                <input type="file" id="file-ip-1" accept="image/*"  selectedFile (change)="showPreview($event);onFileChange($event)" required>
+                <input type="file" id="file-ip-1" name="image" accept="image/*"  selectedFile (change)="onSelectImage($event);showPreview($event)" required>
               </div>
             </div>
         </fieldset>

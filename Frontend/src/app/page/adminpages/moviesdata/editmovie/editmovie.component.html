@@ -1,62 +1,62 @@
 <div class="row">
     <div class="col-md-12">
-      <form action="index.html" method="post">
+      <form action="index.html" method="post" [formGroup]="editmovie" (ngSubmit)="onsubmit()">
         <h1> Edit Movie </h1>
         <fieldset>
             <label for="name">Movie Name:</label>
-            <input type="text" id="name" name="user_name">
+            <input type="text" id="name" formControlName="name">
             
             <label>Select Category:</label>
-                <input type="radio" id="under_13" value="under_13" name="user_age"><label for="under_13" class="light me-4">UA</label>
-                <input type="radio" id="over_13" value="over_13" name="user_age"><label for="over_13" class="light me-4">A</label>
-                <input type="radio" id="over_13" value="over_13" name="user_age"><label for="over_13" class="light me-4">PG</label>
+                <input type="radio" id="UA" value="UA"  formControlName="category"><label for="UA" class="light me-4">UA</label>
+                <input type="radio" id="A" value="A"  formControlName="category"><label for="A" class="light me-4">A</label>
+                <input type="radio" id="PG" value="PG"  formControlName="category"><label for="PG" class="light me-4">PG</label>
             <br><br>
 
-            <label for="job">Language:</label>
-            <select id="job" name="user_job">
-                <option value="frontend_developer">Malayalam</option>
-                <option value="php_developer">Hindi</option>
-                <option value="python_developer">Tamil</option>
-                <option value="rails_developer">Telugu</option>
-                <option value="web_designer">English</option>
+            <label for="language">Language:</label>
+            <select id="langiage" formControlName="language">
+                <option value="Malayalam">Malayalam</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Tamil">Tamil</option>
+                <option value="Telugu">Telugu</option>
+                <option value="English">English</option>
             </select>
         
-            <label for="bio">Cast Details:</label>
-            <textarea id="bio" name="user_bio"></textarea>
+            <label for="cast">Cast Details:</label>
+            <textarea id="cast" formControlName="cast"></textarea>
 
-            <label for="bio">Description:</label>
-            <textarea id="bio" name="user_bio"></textarea>
+            <label for="description">Description:</label>
+            <textarea id="description" formControlName="description"  ></textarea>
 
-            <label for="name">Rating:</label>
-            <input type="text" id="name" name="user_name">
+            <label for="rating">Rating:</label>
+            <input type="text" id="rating" formControlName="rating"  >
 
-            <label for="name">Seats:</label>
-            <input type="text" id="name" name="user_name">
+            <label for="seats">Seats:</label>
+            <input type="text" id="seats" formControlName="seats" >
 
-            <label for="name">Price:</label>
-            <input type="text" id="name" name="user_name">
+            <label for="price">Price:</label>
+            <input type="text" id="price" formControlName="price"  >
 
-            <label for="job">Screen:</label>
-            <select id="job" name="user_job">
-                <option value="frontend_developer">Screen 1</option>
-                <option value="php_developer">Screen 2</option>
-                <option value="python_developer">Screen 3</option>
-                <option value="rails_developer">Screen 4</option>
-                <option value="web_designer">Screen 5</option>
+            <label for="screen">Screen:</label>
+            <select id="screen" formControlName="screen" required  >
+                <option value="Screen 1">Screen 1</option>
+                <option value="Screen 2">Screen 2</option>
+                <option value="Screen 3">Screen 3</option>
+                <option value="Screen 4">Screen 4</option>
+                <option value="Screen 5">Screen 5</option>
             </select>
 
             <div class="center">
-                <div class="form-input">
-                  <div class="preview">
-                    <img id="file-ip-1-preview">
-                  </div>
-                  <label for="file-ip-1">Upload Poster</label>
-                  <input type="file" id="file-ip-1" accept="image/*" (change)="showPreview($event);">                  
+              <div class="form-input">
+                <div class="preview">
+                  <img id="file-ip-1-preview">
                 </div>
+                <label for="file-ip-1">Upload Poster</label>
+                <input type="file" id="file-ip-1" name="image" accept="image/*"  selectedFile (change)="showPreview($event)" required>
+              </div>
             </div>  
         </fieldset>
        
-        <button type="submit">Add</button>
+        <button type="submit">Update</button>
         
        </form>
     </div>

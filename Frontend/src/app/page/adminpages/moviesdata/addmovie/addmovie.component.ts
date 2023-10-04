@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatasService } from 'src/app/servicefiles/datas.service';
 
@@ -7,23 +7,15 @@ import { DatasService } from 'src/app/servicefiles/datas.service';
   templateUrl: './addmovie.component.html',
   styleUrls: ['./addmovie.component.css']
 })
-export class AddmovieComponent {
+export class AddmovieComponent implements OnInit {
 
-    formData= new FormData();
-    name='';
-    category='';
-    language='';
-    cast='';
-    description='';
-    rating='';
-    seats='';
-    price='';
-    screen='';
-    // image='';
+  imagePreview:any;
 
+  constructor(public datasService:DatasService, private router:Router){}
 
-
-  constructor(private serv:DatasService, private router:Router){}
+  ngOnInit(): void {
+    
+  }
 
   showPreview(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -35,33 +27,49 @@ export class AddmovieComponent {
     }
   }
 
-  onFileChange(event: any) {
-    if (event.target.files && event.target.files.length) {
-      const file = event.target.files[0];
-      this.formData.set('image', file);
+  onSelectImage(event: any) {
+    // Ensure event.target is not null and is an HTMLInputElement
+    if (event?.target instanceof HTMLInputElement) {
+      const file = event.target.files?.[0];
+  
+      // Check if a file was selected
+      if (file) {
+        console.log(file.type);
+        this.datasService.form.patchValue({
+          image: file,
+        });
+  
+        const allowedFileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+        
+        // Check if the selected file type is allowed
+        if (allowedFileTypes.includes(file.type)) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            // Set the imagePreview with the result
+            this.imagePreview = reader.result as string;
+          };
+          reader.readAsDataURL(file);
+        } else {
+          // Handle the case where the file type is not allowed
+          console.error('Selected file type is not allowed.');
+        }
+      } else {
+        // Handle the case where no file was selected
+        console.error('No file selected.');
+      }
+    } else {
+      // Handle the case where event.target is not an HTMLInputElement
+      console.error('Invalid event target.');
     }
   }
 
+  onSubmit(){
+      this.datasService.addmovie(this.datasService.form.value, this.datasService.form.value.image)
+      .subscribe((res: any) => {
+        this.router.navigate(['']);
+        this.imagePreview = null;
+      })
 
-  uploadmovie(formData: FormData) {
-    formData.append('description', this.description);
-    formData.append('name', this.name);
-    formData.append('category', this.category);
-    formData.append('language', this.language);
-    formData.append('cast', this.cast);
-    formData.append('rating', this.rating);
-    formData.append('seats', this.seats);
-    formData.append('price', this.price);
-    formData.append('screen', this.screen);
-
-    this.serv.addmovie(formData).subscribe(
-      (response) => {
-        this.router.navigate(['movielist']);
-        console.log('Image uploaded successfully:', response);
-      },
-      (error) => {
-        console.error('Error uploading image:', error);
-      }
-    );
   }
+
 }

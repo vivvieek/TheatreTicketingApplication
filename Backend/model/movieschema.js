@@ -7,8 +7,12 @@ const movieSchema=new mongoose.Schema({
     cast: String,
     description: String,
     rating: String,
-    seats: String,
-    price: String,
+    seats: Number,
+    seatsbooked: {
+        type: Number,
+        default: '0' // Default value is set to '0'
+    },
+    price: Number,
     screen: String,
     image: String,
 })

@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,7 +8,24 @@ import { Observable } from 'rxjs';
 })
 export class DatasService {
 
-  constructor(private http:HttpClient) { }
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  constructor(private http:HttpClient, public fb:FormBuilder) { }
+
+  form: FormGroup = this.fb.group({
+    name: [''],
+    language: [''],
+    category: [''],
+    cast: [''],
+    description: [''],
+    rating: [''],
+    seats: [''],
+    price: [''],
+    screen: [''],
+    image: [null]
+  })
+
+
 
   getCus(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/viewcus');
@@ -29,11 +47,43 @@ export class DatasService {
     return this.http.get('http://localhost:3000/viewmess');
   }
 
-  addmovie(formData: FormData) {
-    return this.http.post('http://localhost:3000/addmovie', formData);
+  getMovie(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/viewmovie');
   }
 
-  getMovie() {
-    return this.http.get('http://localhost:3000/viewmovie');
+  addmovie(movie:any,profileImage:File):Observable<any>{
+    let formData = new FormData();
+    formData.append('name' , movie.name);
+    formData.append('category' , movie.category);
+    formData.append('language' , movie.language);
+    formData.append('cast' , movie.cast);
+    formData.append('description' , movie.description);
+    formData.append('rating' , movie.rating);
+    formData.append('seats' , movie.seats);
+    formData.append('price' , movie.price);
+    formData.append('screen' , movie.screen);
+    formData.append('image' , movie.image);
+
+    return this.http.post(`http://localhost:3000/addmovie` , formData)
   }
+
+  getonemovie(id:any){
+    return this.http.get(`http://localhost:3000/getonemovie/${id}`)
+  }
+
+  editmovie(updatedData:any,id:any){
+    return this.http.put(`http://localhost:3000/editmovie/${id}`,updatedData)
+
+  }
+
+  delmovie(id:any){
+    return this.http.delete(`http://localhost:3000/deletemovie/${id}`)
+  }
+
 }
+
+
+
+
+
+

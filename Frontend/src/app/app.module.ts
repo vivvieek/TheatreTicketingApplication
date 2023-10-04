@@ -49,7 +49,8 @@ import { DatasService } from './servicefiles/datas.service';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
     
   ],
   providers: [LoginService,

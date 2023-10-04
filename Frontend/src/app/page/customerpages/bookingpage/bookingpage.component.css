@@ -136,6 +136,14 @@
     background-color: rgba(255, 187, 0, 0.705); 
   }
 
-  .Availability{
+  .availabe{
     background-color: green;
+  }
+
+  .fastflling{
+    background-color: orange;
+  }
+
+  .housefull{
+    background-color: red;
   }

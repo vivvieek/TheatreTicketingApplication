@@ -1,29 +1,9 @@
 <!-- Carousal -->
 <hr>
-<div class="gallery-container d-flex align-items-center justify-content-center bg-dark p-2" id="gallery-container">
-  <a >
-    <img class="img-responsive" src="/assets/Missionimpossible.jpg" />
-  </a>
-  <a>
-    <img class="img-responsive" src="/assets/Elemental.jpg" />
-  </a>
-  <a >
-    <img class="img-responsive" src="/assets/Jailer.jpg" />
-  </a>
-  <a >
-    <img class="img-responsive" src="/assets/Meg2.jpg" />
-  </a>
-  <a >
-    <img class="img-responsive" src="/assets/Jawan.jpeg" />
-  </a>
-  <a >
-    <img class="img-responsive" src="/assets/Oppenheimer.jpg" />
-  </a>
-  <a >
-    <img class="img-responsive" src="/assets/Strays.jpg" />
-  </a>
-  <a >
-    <img class="img-responsive" src="/assets/TheNun2.jpg" />
+<div class="gallery-container d-flex align-items-center justify-content-center bg-dark p-2" id="gallery-container" >
+  <a *ngFor="let item of movie" >
+    <!-- [src]="item.image" -->
+    <img class="img-responsive" src="/assets/Jailer.jpg" >
   </a>
 </div>
 <hr>
@@ -31,194 +11,24 @@
 <!-- Movie Lists -->
 <div class="container2 text-center">
     <div class="row d-flex align-items-center justify-content-center mb-5">
-        <div class="col col-md-auto mb-5">
+        <div class="col col-md-auto mb-5" *ngFor="let item of movie">
             <div class="card" style="width: 18rem;">
+              <!-- [src]="item.image" -->
                 <img src="/assets/Jailer.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Jailer</h5>
-                  <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
+                  <h5 class="card-title">{{item.name}}</h5>
+                  <p class="card-text"><i class="bi bi-star"></i> {{item.rating}}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Category : U/A</li>
-                  <li class="list-group-item">Language : Tamil</li>
-                  <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
+                  <li class="list-group-item">Category : {{item.category}}</li>
+                  <li class="list-group-item">Language : {{item.language}}</li>
+                  <li class="list-group-item">{{item.description}}</li>
                 </ul>
                 <div class="card-body">
-                  <a routerLink="booking" class="card-link button-7">Book Now</a>
+                  <a (click)="Book(item._id)" class="card-link button-7">Book Now</a>
                 </div>
             </div>
         </div>
-        <div class="col col-md-auto mb-5">
-            <div class="card" style="width: 18rem;">
-                <img src="/assets/Jawan.jpeg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Jailer</h5>
-                  <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Category : U/A</li>
-                  <li class="list-group-item">Language : Tamil</li>
-                  <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-                </ul>
-                <div class="card-body">
-                  <a routerLink="booking" class="card-link button-7">Book Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col col-md-auto mb-5">
-            <div class="card" style="width: 18rem;">
-                <img src="/assets/Meg2.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Jailer</h5>
-                  <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Category : U/A</li>
-                  <li class="list-group-item">Language : Tamil</li>
-                  <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link button-7">Book Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col col-md-auto mb-5">
-            <div class="card" style="width: 18rem;">
-              <img src="/assets/Barbie.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Jailer</h5>
-                <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Category : U/A</li>
-                <li class="list-group-item">Language : Tamil</li>
-                <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-              </ul>
-              <div class="card-body">
-                <a href="#" class="card-link button-7">Book Now</a>
-              </div>
-            </div>
-        </div>
-        <div class="col col-md-auto mb-5">
-            <div class="card" style="width: 18rem;">
-              <img src="/assets/Elemental.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Jailer</h5>
-                <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Category : U/A</li>
-                <li class="list-group-item">Language : Tamil</li>
-                <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-              </ul>
-              <div class="card-body">
-                <a href="#" class="card-link button-7">Book Now</a>
-              </div>
-            </div>
-        </div>
-        <div class="col col-md-auto mb-5">
-          <div class="card" style="width: 18rem;">
-              <img src="/assets/FastX.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Jailer</h5>
-                <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Category : U/A</li>
-                <li class="list-group-item">Language : Tamil</li>
-                <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-              </ul>
-              <div class="card-body">
-                <a href="#" class="card-link button-7">Book Now</a>
-              </div>
-          </div>
-      </div>
-      <div class="col col-md-auto mb-5">
-          <div class="card" style="width: 18rem;">
-              <img src="/assets/Oppenheimer.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Jailer</h5>
-                <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Category : U/A</li>
-                <li class="list-group-item">Language : Tamil</li>
-                <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-              </ul>
-              <div class="card-body">
-                <a href="#" class="card-link button-7">Book Now</a>
-              </div>
-          </div>
-      </div>
-      <div class="col col-md-auto mb-5">
-          <div class="card" style="width: 18rem;">
-              <img src="/assets/Missionimpossible.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Jailer</h5>
-                <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Category : U/A</li>
-                <li class="list-group-item">Language : Tamil</li>
-                <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-              </ul>
-              <div class="card-body">
-                <a href="#" class="card-link button-7">Book Now</a>
-              </div>
-          </div>
-      </div>
-      <div class="col col-md-auto mb-5">
-          <div class="card" style="width: 18rem;">
-            <img src="/assets/TheNun2.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Jailer</h5>
-              <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Category : U/A</li>
-              <li class="list-group-item">Language : Tamil</li>
-              <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-            </ul>
-            <div class="card-body">
-              <a href="#" class="card-link button-7">Book Now</a>
-            </div>
-          </div>
-      </div>
-      <div class="col col-md-auto mb-5">
-          <div class="card" style="width: 18rem;">
-            <img src="/assets/Strays.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Jailer</h5>
-              <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Category : U/A</li>
-              <li class="list-group-item">Language : Tamil</li>
-              <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-            </ul>
-            <div class="card-body">
-              <a href="#" class="card-link button-7">Book Now</a>
-            </div>
-          </div>
-      </div>
-      <div class="col col-md-auto mb-5">
-        <div class="card" style="width: 18rem;">
-          <img src="/assets/Gran Turismo.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Jailer</h5>
-            <p class="card-text"><i class="bi bi-star"></i> 4.2</p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Category : U/A</li>
-            <li class="list-group-item">Language : Tamil</li>
-            <li class="list-group-item">Muthuvel Pandian A Retired Jailer Who is leading happier life with his family,His life gets turned when his Cop Son gets killed while investigating a Idol smuggling.</li>
-          </ul>
-          <div class="card-body">
-            <a href="#" class="card-link button-7">Book Now</a>
-          </div>
-        </div>
-    </div>
-
     </div>
 </div>
 
