@@ -1,13 +1,17 @@
 <div class="container text-center">
     <div class="row border">
         <div class="col border d-flex justify-content-center">
+            <form [formGroup]="bookticket" (ngSubmit)="onSubmit()">
                 <div class="card" style="width: 18rem;">
-                    <img src="/assets/Missionimpossible.jpg" class="card-img-top" alt="...">
+                    <!-- [src]="item.image" -->
+                    <img src="/assets/Jailer.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
-                      <h5 class="card-title">{{item.name}}</h5>
-
+                      <h5 class="card-title" Name="name" >{{item.name}}</h5>
+                      <hr>
                       <li class="list-group-item">{{item.description}}</li>
-                      <li class="list-group-item">{{item.cast}}</li>
+                      <hr>
+                      <li class="list-group-item">Cast : {{item.cast}}</li>
+                      <hr>
                     </div>
                     <div class="container">
                         <div class="row">
@@ -35,30 +39,33 @@
                                     <button *ngIf="getAvailabilityStatus() === 'fastfilling'" class="fastflling">Fast Filling</button>
                                     <button *ngIf="getAvailabilityStatus() === 'housefull'" class="housefull">Housefull</button>
                                 </div>
-                                <form [formGroup]="bookticket" (ngSubmit)="onsubmit()">
+                                <div >
                                     <ul class='booking-widget__form'>
 
                                         <li>
                                             <div class='form__dropdown'>
-                                                <label for='seats'>Select Number of Seats</label>
+                                                <label for='seatsselected'>Select Number of Seats</label>
                                                 <div class='form-field'> 
-                                                    <select id='seats' [(ngModel)]="seatsSelected" (change)="updateSeatsBooked()">    
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
+                                                    <select id='seatsselected' #selectedSeats (change)="onSeatsSelectedChange(selectedSeats.value)">    
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
                                                     </select>
-                                                    <div class='select-button' ><i class="bi bi-person-add"></i></div>
+                                                    <div >Maximum 10 seats only</div>
                                                 </div>
-                                                <span>Maximum 6 seats only</span>
                                             </div>
                                         </li>
 
                                         <li>
                                             <div class=' form-field form-field__checkbox'>
-                                                <input type="checkbox" (click)="highlightDiv()" id='flexibleDates' value="">
+                                                <input type="checkbox" (click)="highlightDiv()" id='flexibleDates' required>
                                             </div>
                                             <label for="flexibleDates">I agree to all the **Terms and Conditions</label>
                                         </li>
@@ -66,7 +73,7 @@
                                             <input type="submit" id='bookingSubmit' class='form__submit' value='Book Now'>
                                         </li>
                                     </ul>       
-                                </form>
+                                </div>
                                 <div id="h6" [ngClass]="{'highlighted': isHighlighted}">
                                     **The seating arrangement for the theater comprises six rows, each containing five seats. Booking for seats follows the "first come, first served" rule, commencing from the last row on the right-hand side.
                                     Customers are permitted to book a maximum of six tickets in a single transaction. If more than six tickets are required, a separate booking transaction is necessary with another account. 
@@ -76,6 +83,7 @@
                     </div>
 
                 </div>
+            </form>
         </div>
 
     </div>

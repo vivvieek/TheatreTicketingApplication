@@ -2,7 +2,7 @@
     <!-- Form to Input Notfication message -->
     <form  (ngSubmit)="submit()">
         <div class="form-group">
-        <label for="notification" class="text-primary">Enter Notification Message</label>
+        <label for="notification" class="text-light">Enter Notification Message</label>
         <input type="text" class="form-control" id="notification" placeholder="Message..." name="notificationmess" [(ngModel)]="notification.notificationmess" #notificationmess="ngModel">
         </div>
         <br>
@@ -11,7 +11,7 @@
 
     <!-- Display of old notifications posted -->
 
-    <p class="lead">
+    <p class="lead text-light">
         Previous Notifications
     </p>
     <div class="oldnotimess ">

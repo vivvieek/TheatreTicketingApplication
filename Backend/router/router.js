@@ -14,7 +14,7 @@ router.use(express.urlencoded({extended:true}));
 
 // Resgister User
 router.post('/adduser',(req,res)=>{
-  console.log(req.body);
+  // console.log(req.body);
   const newUser=new User({
     name:req.body.name,
     email:req.body.email,
@@ -38,7 +38,7 @@ router.post('/login',async(req,res)=>{
     var pass=req.body.passwordInput;
     var role='admin';
     if((email=='admin@email.com'&&pass=='admin123')){
-      let payload={id:role,password:pass};
+      let payload={id:role,email:email};
       let token=jwt.sign(payload,'secretkey');
       res.status(200).send({message:'Success',token:token});
     }
@@ -51,7 +51,7 @@ router.post('/login',async(req,res)=>{
         else {
           if ((email==user.email&&pass==user.password)) {
             let role='customer';
-            let payload={id:role,password:pass}; 
+            let payload={id:role,email:email}; 
             let token = jwt.sign(payload, 'secretKey', { expiresIn: '1h' });
             res.json({ message: 'Login successful', token:token });
           } 
@@ -83,6 +83,11 @@ router.get('/viewcus',(req,res)=>{
   })
 });
 
+// View one Customer Data
+
+
+// Edit Customer Data
+
 // Delete Customer Data
 router.delete('/delcus/:id', async (req, res) => {
   try {
@@ -95,7 +100,7 @@ router.delete('/delcus/:id', async (req, res) => {
 
 // Add notification
 router.post('/addmess', (req,res)=>{
-  console.log(req.body);
+  // console.log(req.body);
   const newNoti=new Noti({
     notificationmess:req.body.notificationmess
   });
@@ -175,6 +180,7 @@ router.post('/addmovie', upload.single('image'), async (req, res) => {
       description: req.body.description,
       rating: req.body.rating,
       seats: req.body.seats,
+      seatsbooked : req.body.seatsbooked,
       price: req.body.price,
       screen: req.body.screen,
       image: url+'/images/'+req.file.filename,
@@ -249,6 +255,12 @@ router.put('/bookmovie/:_id', async (req, res) => {
       res.send('error')
   }
 })
+
+// Cancel Movie
+
+// Rate Movie
+
+
 
 // token verification
 // function verifytoken(req,res,next){

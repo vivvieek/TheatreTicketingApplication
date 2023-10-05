@@ -32,7 +32,6 @@
 	<div class="form-container sign-in-container">
 		<form #login="ngForm" (ngSubmit)="submit2()">
 			 <h1>Sign in</h1>
-			<!-- <input type="email" placeholder="Enter Email" id="emailInput" name="emailInput" required #emailInput="ngModel" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"> -->
 			<input type="email" placeholder="Enter Email" id="emailInput" name="emailInput" required [(ngModel)]="user.emailInput" #emailInput="ngModel"	 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
 				<span *ngIf="emailInput.touched &&emailInput.errors?.['required']" class="error-message" >Mail ID is required.</span>
 				<span *ngIf="emailInput.touched &&emailInput.errors?.['pattern']" class="error-message">Enter a Valid Email.</span>

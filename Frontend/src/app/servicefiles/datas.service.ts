@@ -26,31 +26,26 @@ export class DatasService {
   })
 
 
-
+  // Customer details
   getCus(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/viewcus');
   }
-
   deleteCus(userId: string): Observable<any> {
     return this.http.delete<any>(`http://localhost:3000/delcus/${userId}`);
   }
 
+  // Notications
   addmessage(data:any){
     return this.http.post<any>('http://localhost:3000/addmess',data);
   }
-
   delmessage(id:any){
     return this.http.delete(`http://localhost:3000/deletemess/${id}`)
   }
-
   viewmessage(){
     return this.http.get('http://localhost:3000/viewmess');
   }
 
-  getMovie(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3000/viewmovie');
-  }
-
+  // Movie details
   addmovie(movie:any,profileImage:File):Observable<any>{
     let formData = new FormData();
     formData.append('name' , movie.name);
@@ -63,23 +58,20 @@ export class DatasService {
     formData.append('price' , movie.price);
     formData.append('screen' , movie.screen);
     formData.append('image' , movie.image);
-
     return this.http.post(`http://localhost:3000/addmovie` , formData)
   }
-
+  getMovie(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/viewmovie');
+  }
   getonemovie(id:any){
     return this.http.get(`http://localhost:3000/getonemovie/${id}`)
   }
-
   editmovie(updatedData:any,id:any){
     return this.http.put(`http://localhost:3000/editmovie/${id}`,updatedData)
-
   }
-
   delmovie(id:any){
     return this.http.delete(`http://localhost:3000/deletemovie/${id}`)
   }
-
 }
 
 

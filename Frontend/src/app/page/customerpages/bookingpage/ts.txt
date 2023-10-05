@@ -1,0 +1,51 @@
+import { Component, OnInit } from '@angular/core';
+import { DatasService } from 'src/app/servicefiles/datas.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+
+@Component({
+  selector: 'app-bookingpage',
+  templateUrl: './bookingpage.component.html',
+  styleUrls: ['./bookingpage.component.css']
+})
+export class BookingpageComponent implements OnInit {
+
+  seatsSelected: any;
+
+
+  updateSeatsBooked() {
+    const selectedSeats = this.seatsSelected;
+    const currentSeatsBooked = this.item.seatsbooked;
+    const newSeatsBooked = currentSeatsBooked + selectedSeats;
+  
+    // Check if the newSeatsBooked is within the allowed range (0 to this.item.seats)
+    if (newSeatsBooked >= 0 && newSeatsBooked <= this.item.seatsbooked) {
+      this.bookticket.patchValue({ seatsbooked: newSeatsBooked });
+    } else {
+      console.error("Can't Book HouseFull");
+    }
+  }
+
+    updateSeatsBooked(){
+      // Get the selected number of seats from the form control
+      const selectedSeats = this.bookticket.get('seatsselected')?.value;
+
+      // Debugging: Log selected seats and available seats
+      console.log('Selected Seats:', selectedSeats);
+      console.log('Available Seats:', this.item.seats);
+
+      // Check if the selectedSeats value is valid and not greater than available seats
+      if (selectedSeats && selectedSeats <= this.item.seats) {
+        // Update seatsbooked by adding the selectedSeats
+        this.item.seatsbooked += selectedSeats;
+
+        // Update seats by subtracting the selectedSeats
+        this.item.seats -= selectedSeats;
+      } else {
+        // Handle invalid input, e.g., display an error message
+        console.log('Invalid number of seats selected.');
+      }
+  }
+
+}

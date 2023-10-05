@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasService } from 'src/app/servicefiles/datas.service';
+import { LoginService } from 'src/app/servicefiles/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-bookingpage',
@@ -11,13 +11,26 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class BookingpageComponent implements OnInit {
 
-  movie:any;
-  item:any
-  id:any;
   bookticket!:FormGroup;
-  seatsSelected: number=1;
+  item:any={
+    name:'',
+    category: '',
+    language: '',
+    cast: '',
+    description: '',
+    rating: '',
+    seats: '',
+    price: '',
+    screen: '',
+    image: '',
+    seatsbooked: '',
+  };
+  id:any;
+  isHighlighted: boolean = false;
+  selectedSeatsValue: string = '1';
+  currentUser:any;
 
-  constructor(private serv:DatasService, private activatedRoute:ActivatedRoute,private fb:FormBuilder,private router:Router){
+  constructor(private serv:DatasService, private activatedRoute:ActivatedRoute,private fb:FormBuilder,private router:Router,private serv2:LoginService){
     this.bookticket=new FormGroup({
       "name": new FormControl(""),
       "category": new FormControl(""),
@@ -33,17 +46,13 @@ export class BookingpageComponent implements OnInit {
     })
   }
 
-  isHighlighted: boolean = false;
-
-  highlightDiv() {
-    this.isHighlighted = !this.isHighlighted;
-  }
+  
 
   ngOnInit(): void {
     this.id=this.activatedRoute.snapshot.paramMap.get('id')
     this.serv.getonemovie(this.id).subscribe((data)=>{
-      this.item=data
-      console.log(this.item)
+      this.item=data;
+      console.log(this.item);
       this.bookticket = this.fb.group({
         "name": this.item.name,
         "category": this.item.category,
@@ -55,7 +64,7 @@ export class BookingpageComponent implements OnInit {
         "price": this.item.price,
         "screen": this.item.screen,
         "image": this.item.image,
-        "seatsbooked": [this.item.seatsbooked, Validators.required],
+        "seatsbooked": this.item.seatsbooked,
       })
     })
   }
@@ -70,30 +79,37 @@ export class BookingpageComponent implements OnInit {
     }
   }
 
-  updateSeatsBooked() {
-    const selectedSeats = this.seatsSelected; // Get the selected number of seats
-    // const currentSeatsBooked = this.bookticket.get('seatsbooked').value || 0;
-    const currentSeatsBooked = this.item.seatsbooked;
-    const newSeatsBooked = currentSeatsBooked + selectedSeats;
-  
-    // Check if the newSeatsBooked is within the allowed range (0 to this.item.seats)
-    if (newSeatsBooked >= 0 && newSeatsBooked <= this.item.seats) {
-      this.bookticket.patchValue({ seatsbooked: newSeatsBooked });
+  highlightDiv() {
+    this.isHighlighted = !this.isHighlighted;
+  }
+
+  onSeatsSelectedChange(selectedValue: string) {
+    this.selectedSeatsValue = selectedValue;
+  }
+
+  updateCus(){
+    this.currentUser=this.serv2.getUser();
+    
+  }
+
+
+  onSubmit() {
+    const selectedSeats = +this.selectedSeatsValue; // Convert it to a number if it's a string
+    if (selectedSeats <= this.item.seats) {
+      // Update the values in the FormGroup
+      this.bookticket.patchValue({
+        seatsbooked: this.item.seatsbooked + selectedSeats,
+        seats: this.item.seats - selectedSeats
+      });
+      // this.updateCus();
+      this.serv.editmovie(this.bookticket.value, this.id).subscribe(data => {
+        console.log(data);
+        alert("Seat Booked");
+        this.router.navigate(['movielist']);
+      });
     } else {
-      // Handle the case where the user selects more seats than available or a negative number of seats
-      // You can display an error message or take appropriate action here.
-      // For now, I'll just log an error message.
-      console.error('Invalid number of seats selected');
+      alert("Not enough available seats.");
     }
   }
 
-
-  onsubmit(){
-    console.log(this.bookticket.value)
-    this.serv.editmovie(this.bookticket.value,this.id).subscribe(data=>{
-      console.log(data)
-      alert("Seat Booked")
-      this.router.navigate(['movielist'])
-    })
-  }
 }

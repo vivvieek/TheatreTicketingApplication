@@ -42,6 +42,7 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
+  // Registration
   submit(){
     this.serv.adduser(this.userdetail).subscribe((res=>{
       alert("Registered Successfully. Now Please Login")
@@ -49,6 +50,7 @@ export class RegistrationComponent implements OnInit {
     }))
   }
 
+  // Login
   submit2(){
     this.serv.login(this.user).subscribe((res=>{
       alert("Login Successful")

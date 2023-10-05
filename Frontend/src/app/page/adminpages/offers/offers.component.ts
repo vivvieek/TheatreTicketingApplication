@@ -24,7 +24,7 @@ export class OffersComponent {
 
   submit() {
     this.serv.addmessage(this.notification).subscribe(res => {
-      alert('Message posted on homepage');
+      alert('Notification Posted');
       this.notification = {
         notificationmess: ''
       };
@@ -35,7 +35,7 @@ export class OffersComponent {
 
   delmess(id: any) {
     this.serv.delmessage(id).subscribe(data => console.log(data));
-    alert('Message deleted');
+    alert('Notification deleted');
     window.location.reload();
     this.fetchmessage();
   }
@@ -43,7 +43,7 @@ export class OffersComponent {
   fetchmessage(): void {
     this.serv.viewmessage().subscribe(data => {
       this.notifications = data;
-      console.log(this.notifications);
+      // console.log(this.notifications);
     });
   }
 
