@@ -4,7 +4,7 @@
             <div class="table-container mt-5">
                 <div class="mb-2">
                     <h2 class="">Customer Data</h2>
-                    <small class="text-secondary">View all Customer details with movies booked.</small>
+                    <small class="text-secondary">View all Customer details.</small>
                 </div>
                 <table id="mytable" class="table align-middle mb-0 bg-white">
                     <thead class="bg-light">
@@ -40,6 +40,58 @@
                             </td>
                             <td>
                                 <button type="button" (click)="deleteUser(user._id)" class="btn btn-link btn-sm btn-rounded text-primary">
+                                    <i class="me-1 action-icon bi bi-file-earmark-richtext text-primary" ></i>Delete
+                                </button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="main mt-5 mb-5">
+    <div class="container">
+        <div class="main-sub row align-items-center pt-5">
+            <div class="table-container mt-5">
+                <div class="mb-2">
+                    <h2 class="">Customer Reviews</h2>
+                    <small class="text-secondary">View all Customer reviews</small>
+                </div>
+                <table id="mytable" class="table align-middle mb-0 bg-white">
+                    <thead class="bg-light">
+                        <tr class="header-row">
+                            <th>ID #</th>
+                            <th>Movie</th>
+                            <th>Customer Name</th>
+                            <th>Review</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <p class="fw-bold mb-1">1</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span> 
+                                </span>Jailer
+                            </td>
+                            <td>
+                                <span>Ramesh</span>
+                            </td>
+                            <td>
+                                <span>Nice Movie</span>
+                            </td>
+                            <td>
+                                <button type="button"  class="btn btn-link btn-sm btn-rounded text-primary">
                                     <i class="me-1 action-icon bi bi-file-earmark-richtext text-primary" ></i>Delete
                                 </button>
                             </td>

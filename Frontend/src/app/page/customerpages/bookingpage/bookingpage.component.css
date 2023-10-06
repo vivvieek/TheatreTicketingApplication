@@ -22,10 +22,10 @@
     box-shadow: 1px 0px 3px rgba(0, 0, 0, .44);
   }
   
-  .booking-widget__header figure {
+  /* .booking-widget__header figure {
     margin: 0;
     padding: 0;
-  }
+  } */
   
   .header-caption {
     position: absolute;
@@ -143,4 +143,10 @@
 
   .housefull{
     background-color: red;
+  }
+
+  span{
+    border: 2px solid black;
+    padding: 10px;
+    margin: 5px;
   }

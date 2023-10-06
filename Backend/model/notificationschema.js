@@ -1,4 +1,4 @@
-// Message Schema
+// Ntification Schema
 const mongoose = require('mongoose');
 const notificationSchema=new mongoose.Schema({
     notificationmess:String

@@ -111,7 +111,7 @@ export class BookingpageComponent implements OnInit {
         this.router.navigate(['movielist']);
       });
     } else {
-      alert("Not enough available seats.");
+      alert("HouseFull !");
     }
   }
 }

@@ -9,4 +9,3 @@ const movieBookedSchema = new mongoose.Schema({
 
 const MovieBooked = mongoose.model('MovieBooked', movieBookedSchema);
 module.exports = MovieBooked
-

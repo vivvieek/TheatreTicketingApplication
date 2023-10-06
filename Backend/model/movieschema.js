@@ -10,7 +10,7 @@ const movieSchema=new mongoose.Schema({
     seats: Number,
     seatsbooked: {
         type: Number,
-        default: '0' // Default value is set to '0'
+        default: '0'
     },
     price: Number,
     screen: String,

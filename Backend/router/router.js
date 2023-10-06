@@ -9,12 +9,15 @@ const User=require("../model/customerschema");
 const Noti = require('../model/notificationschema');
 const Movie = require('../model/movieschema');
 const MovieBooked = require('../model/moviebooked');
+const Review =require('../model/ratingschema');
+
+require('dotenv').config()
 
 const transporter=nodemailer.createTransport({
   service:"hotmail", 
   auth:{
-      user:"xpressshake@hotmail.com",
-      pass:"sp2023LXH*"
+      user: process.env.myemail,
+      pass: process.env.mypassword
   }
 });
 
@@ -285,23 +288,23 @@ router.put('/bookmovie/:_id', async (req, res) => {
     });
     await movieBooked.save();
 
-    // const mailOptions = {
-    //   from: 'xpressshake@hotmail.com', 
-    //   to: uemail,                        
-    //   subject: 'Booking Confirmation',
-    //   text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
+    const mailOptions = {
+      from: process.env.myemail, 
+      to: uemail,                        
+      subject: 'Booking Confirmation',
+      text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
       
-    //   Thank you
-    //   Watch Now Theatres
-    //   +91 9999999999`, 
-    // };
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //   if (error) {
-    //     console.error('Error sending email:', error);
-    //   } else {
-    //     console.log('Email sent:', info.response);
-    //   }
-    // });
+      Thank you
+      Watch Now Theatres
+      +91 9999999999`, 
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
 
     res.json(updated);
   } catch (error) {
@@ -309,7 +312,6 @@ router.put('/bookmovie/:_id', async (req, res) => {
     res.status(500).send('Error');
   }
 });
-
 
 // get bookeddata
 router.get('/bookeddata', async (req, res) => {
@@ -341,6 +343,10 @@ router.delete('/cancelmovie/:_id',(req, res) => {
 });
 
 // Rate Movie
+
+// Get rated movie details
+
+// Delete a rating
 
 
 

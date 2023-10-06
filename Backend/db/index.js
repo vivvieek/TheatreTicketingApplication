@@ -1,6 +1,7 @@
+require('dotenv').config()
+
 const mongoose = require('mongoose');
-//MongoDB Atlas connect
-mongoose.connect('mongodb+srv://spvivekbabu:fsda123@cluster0.h7vuisq.mongodb.net/ticketbooking', {
+mongoose.connect(process.env.mongodb_url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

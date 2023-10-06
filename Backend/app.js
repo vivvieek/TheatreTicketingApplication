@@ -1,18 +1,22 @@
 const express = require('express');
 const app = express();
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+const cors =require('cors');
+const morgan=require('morgan');
 
-const cors = require('cors');
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(morgan("dev"));
 
 const db = require("../Backend/db/index");
+
+require('dotenv').config()
+const PORT=process.env.PORT;
+
 const api=require("../Backend/router/router");
 app.use('/',api);
 
-// Start the server
-const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

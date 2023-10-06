@@ -34,9 +34,9 @@
                         <div class="row">
                             <div class="booking-widget">
                                 <div class='booking-widget__header'>
-                                    <button *ngIf="getAvailabilityStatus() === 'available'" class="availabe">Available</button>
-                                    <button *ngIf="getAvailabilityStatus() === 'fastfilling'" class="fastflling">Fast Filling</button>
-                                    <button *ngIf="getAvailabilityStatus() === 'housefull'" class="housefull">Housefull</button>
+                                    <span *ngIf="getAvailabilityStatus() === 'available'" class="availabe">Available</span>
+                                    <span *ngIf="getAvailabilityStatus() === 'fastfilling'" class="fastflling">Fast Filling</span>
+                                    <span *ngIf="getAvailabilityStatus() === 'housefull'" class="housefull">Housefull</span>
                                 </div>
                                 <div >
                                     <ul class='booking-widget__form'>
