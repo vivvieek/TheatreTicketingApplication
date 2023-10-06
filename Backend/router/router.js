@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer');
 const User=require("../model/customerschema");
 const Noti = require('../model/notificationschema');
 const Movie = require('../model/movieschema');
+const MovieBooked = require('../model/moviebooked');
 
 const transporter=nodemailer.createTransport({
   service:"hotmail", 
@@ -94,15 +95,19 @@ router.get('/viewcus',(req,res)=>{
   })
 });
 
-// View one Customer Data
-
 // Delete Customer Data
 router.delete('/delcus/:id', async (req, res) => {
   try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    const userEmail = user.email;
+    await MovieBooked.deleteMany({ username: userEmail });
     await User.findByIdAndRemove(req.params.id);
-    res.status(200).json({ message: 'User deleted successfully' });
+    res.status(200).json({ message: 'User and related MovieBooked records deleted successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting user', error: error.message });
+    res.status(500).json({ message: 'Error deleting user and related MovieBooked records', error: error.message });
   }
 });
 
@@ -201,7 +206,7 @@ router.post('/addmovie', upload.single('image'), async (req, res) => {
   }
 });
 
-// View movie
+// View all movies
 router.get('/viewmovie', async (req, res) => {
   try {
     const movies = await Movie.find();
@@ -237,18 +242,25 @@ router.put('/editmovie/:_id', async (req, res) => {
 })
 
 // Delete Movie
-router.delete('/deletemovie/:_id',(req, res) => {
+router.delete('/deletemovie/:_id', (req, res) => {
   Movie.findByIdAndRemove(req.params._id)
-  .then((movie)=>{
-    if (movie){
-      res.status(200).json({message:'movie deleted successfully'});
-    }else{
-      res.status(404).json({error:'movie not found'});
-    }
-  })
-  .catch((error)=>{
-    res.status(500).json({error:'Failed to delete movie'});
-  });
+    .then((movie) => {
+      if (!movie) {
+        return res.status(404).json({ error: 'Movie not found' });
+      }
+
+      const movieName = movie.name;
+      MovieBooked.deleteMany({ movie: movieName })
+        .then(() => {
+          res.status(200).json({ message: 'Movie deleted successfully' });
+        })
+        .catch((error) => {
+          res.status(500).json({ error: 'Failed to delete related data from MovieBooked' });
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to delete movie' });
+    });
 });
 
 // Book Movie
@@ -266,28 +278,30 @@ router.put('/bookmovie/:_id', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    user.moviebooked.push(updateData.name);
-    user.seatsbooked.push(seatno); 
-
-    await user.save();
-
-    const mailOptions = {
-      from: 'xpressshake@hotmail.com', 
-      to: uemail,                        
-      subject: 'Booking Confirmation',
-      text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
-      
-      Thank you
-      Watch Now Theatres
-      +91 9999999999`, 
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending email:', error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
+    const movieBooked = new MovieBooked({
+      username: uemail,
+      movie: updateData.name,
+      seats: seatno,
     });
+    await movieBooked.save();
+
+    // const mailOptions = {
+    //   from: 'xpressshake@hotmail.com', 
+    //   to: uemail,                        
+    //   subject: 'Booking Confirmation',
+    //   text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
+      
+    //   Thank you
+    //   Watch Now Theatres
+    //   +91 9999999999`, 
+    // };
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     console.error('Error sending email:', error);
+    //   } else {
+    //     console.log('Email sent:', info.response);
+    //   }
+    // });
 
     res.json(updated);
   } catch (error) {
@@ -297,7 +311,34 @@ router.put('/bookmovie/:_id', async (req, res) => {
 });
 
 
-// Cancel Movie
+// get bookeddata
+router.get('/bookeddata', async (req, res) => {
+  try {
+    let useremail = req.query.user;
+    console.log(useremail);
+    const moviesbooked = await MovieBooked.find({username:useremail});
+    console.log(moviesbooked);
+    res.json(moviesbooked);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch movies' });
+  }
+});
+
+// Cancel booking
+router.delete('/cancelmovie/:_id',(req, res) => {
+  MovieBooked.findByIdAndRemove(req.params._id)
+  .then((movie)=>{
+    if (movie){
+      res.status(200).json({message:'Movie Cancelled'});
+    }else{
+      res.status(404).json({error:'Movie not found'});
+    }
+  })
+  .catch((error)=>{
+    res.status(500).json({error:'Failed to cancel'});
+  });
+});
 
 // Rate Movie
 

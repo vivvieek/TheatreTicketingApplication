@@ -6,14 +6,14 @@
         <th>Cancel Booking</th>
       </tr>
     </thead>
-    <tbody *ngFor="let user of users">
-      <tr >
-        <td *ngFor="let movie of user.moviebooked"><strong>
-        {{movie}}
+    <tbody>
+      <tr *ngFor="let items of item">
+        <td><strong>
+          {{items.movie}}
         </strong></td>
-        <td *ngFor="let seat of user.seatsbooked">{{seat}}</td>
+        <td>{{items.seats}}</td>
         <td>
-            <button class="button-35" role="button">Cancel</button>
+            <button class="button-35" role="button" (click)="cancel(items._id)">Cancel</button>
         </td>
       </tr>
     </tbody>

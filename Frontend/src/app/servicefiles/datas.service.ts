@@ -77,6 +77,16 @@ export class DatasService {
   bookmovie(updatedData:any,id:any,data1:any,data2:any){
     return this.http.put(`http://localhost:3000/bookmovie/${id}`,{updatedData,data1,data2})
   }
+
+  // Get booked data
+  getbookedmovies(user:any){
+    return this.http.get(`http://localhost:3000/bookeddata?user=${user}`)
+  }
+
+  // cancel movie
+  cancelmovie(id:any){
+    return this.http.delete(`http://localhost:3000/cancelmovie/${id}`)
+  }
 }
 
 

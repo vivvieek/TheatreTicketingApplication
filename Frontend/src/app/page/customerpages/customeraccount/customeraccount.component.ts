@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasService } from 'src/app/servicefiles/datas.service';
+import { LoginService } from 'src/app/servicefiles/login.service';
 
 @Component({
   selector: 'app-customeraccount',
@@ -8,22 +9,31 @@ import { DatasService } from 'src/app/servicefiles/datas.service';
 })
 export class CustomeraccountComponent implements OnInit {
 
-  users:any[]=[];
+  currentUser:any;
+  item:any;
 
-  constructor(private serv:DatasService){}
+  constructor(private serv:DatasService, private serv2:LoginService){}
+
 
   ngOnInit(): void {
-    this.fetchCus();
+    this.currentUser=this.serv2.getUser();
+    console.log(this.currentUser)
+    this.moviesbooked();
   }
 
-  fetchCus(): void {
-    this.serv.getCus().subscribe(
-      (users) => {
-        this.users = users;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  moviesbooked(){
+    this.serv.getbookedmovies(this.currentUser).subscribe((data)=>{
+    this.item=data
+    console.log(this.item)
+    })
   }
+
+  cancel(id:any){
+    this.serv.cancelmovie(id).subscribe(data=>console.log(data))
+    alert('Movie cancelled')
+    this.moviesbooked();
+  }
+
+
+
 }
