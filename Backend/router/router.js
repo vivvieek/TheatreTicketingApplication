@@ -2,15 +2,26 @@ const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 const jwt = require ('jsonwebtoken');
-const multer = require('multer')
+const multer = require('multer');
+const nodemailer = require('nodemailer');
 
 const User=require("../model/customerschema");
 const Noti = require('../model/notificationschema');
 const Movie = require('../model/movieschema');
 
+const transporter=nodemailer.createTransport({
+  service:"hotmail", 
+  auth:{
+      user:"xpressshake@hotmail.com",
+      pass:"sp2023LXH*"
+  }
+});
+
 router.use(cors());
 router.use(express.json());
 router.use(express.urlencoded({extended:true}));
+
+router.use('/images', express.static('images'));
 
 // Resgister User
 router.post('/adduser',(req,res)=>{
@@ -84,9 +95,6 @@ router.get('/viewcus',(req,res)=>{
 });
 
 // View one Customer Data
-
-
-// Edit Customer Data
 
 // Delete Customer Data
 router.delete('/delcus/:id', async (req, res) => {
@@ -246,15 +254,48 @@ router.delete('/deletemovie/:_id',(req, res) => {
 // Book Movie
 router.put('/bookmovie/:_id', async (req, res) => {
   try {
-      let id = req.params._id
-      let updateData = {$set: req.body}
-      const updated = await Movie.findByIdAndUpdate(id, updateData,{ new: true })
-      res.json(updated)
+    let id = req.params._id;
+    let updateData = req.body.updatedData;
+    let uemail = req.body.data1;
+    let seatno = req.body.data2;
+
+    const updated = await Movie.findByIdAndUpdate(id, updateData, { new: true });
+
+    const user = await User.findOne({ email: uemail });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.moviebooked.push(updateData.name);
+    user.seatsbooked.push(seatno); 
+
+    await user.save();
+
+    const mailOptions = {
+      from: 'xpressshake@hotmail.com', 
+      to: uemail,                        
+      subject: 'Booking Confirmation',
+      text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
+      
+      Thank you
+      Watch Now Theatres
+      +91 9999999999`, 
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
+
+    res.json(updated);
   } catch (error) {
-      console.log(error)
-      res.send('error')
+    console.log(error);
+    res.status(500).send('Error');
   }
-})
+});
+
 
 // Cancel Movie
 

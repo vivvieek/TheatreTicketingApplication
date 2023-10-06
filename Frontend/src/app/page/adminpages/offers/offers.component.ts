@@ -43,7 +43,6 @@ export class OffersComponent {
   fetchmessage(): void {
     this.serv.viewmessage().subscribe(data => {
       this.notifications = data;
-      // console.log(this.notifications);
     });
   }
 

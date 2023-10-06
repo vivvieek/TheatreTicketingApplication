@@ -18,12 +18,14 @@ export class HeaderComponent implements OnInit{
   isSignout=false;
   currentUser:any;
 
-  constructor(private scrollService: ScrollService,private serv:LoginService, private serv2:DatasService) {}
+  constructor(
+    private scrollService: ScrollService,
+    private serv:LoginService, 
+    private serv2:DatasService) {}
 
   scrolled: boolean = false;
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    // Check the scroll position and update the opacity accordingly
     if (window.pageYOffset > 50) {
       this.scrolled = true;
     } else {
@@ -37,6 +39,7 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
     this.currentUser=this.serv.getRole();
+
     this.navDisplay();
 
     this.serv2.viewmessage().subscribe((data=>{
@@ -70,8 +73,5 @@ export class HeaderComponent implements OnInit{
     window.location.href = newRoute;
     localStorage.clear()
   }
-
-
-
 
 }

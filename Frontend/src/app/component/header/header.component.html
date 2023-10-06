@@ -1,5 +1,4 @@
 <div id="home"></div>
-<!-- navbar -->
 <nav class="navbg navbar navbar-expand-lg  text-light sticky-top" [ngClass]="{'scrolled': scrolled}">
     <div class="container-fluid">
       <a class="logo navbar-brand" href="#home"><img src="/assets/Icon.jpg" alt="Icon" srcset=""></a>
@@ -9,11 +8,11 @@
       <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item ms-2">
-            <a href=""></a>
             <a class="button-31 nav-link active text-light" role="button" aria-current="page" href="#home"><span class="text"><i class="bi bi-house"></i> Home</span></a>
           </li>
+          <!-- For customer -->
           <li class="nav-item ms-2">
-            <a class="button-31 nav-link active text-light" role="button" aria-current="page" (click)="scrollToBottom()"><span class="text"><i class="bi bi-phone"></i> Contact Us</span></a>
+            <a class="button-31 nav-link active text-light" *ngIf="isCustomer || isSignin" role="button" aria-current="page" (click)="scrollToBottom()"><span class="text"><i class="bi bi-phone"></i> Contact Us</span></a>
           </li>
           <!-- For admin -->
           <li class="nav-item ms-2">
@@ -23,7 +22,7 @@
             <a class="button-31 nav-link active text-light" *ngIf="isAdmin" role="button" aria-current="page" routerLink="customerdata"><span class="text"><i class="bi bi-people-fill"></i> Customer Data</span></a>
           </li>
           <li class="nav-item ms-2">
-            <a class="button-31 nav-link active text-light" *ngIf="isAdmin" role="button" aria-current="page" routerLink="offers"><span class="text"><i class="bi bi-star"></i> Offers</span></a>
+            <a class="button-31 nav-link active text-light" *ngIf="isAdmin" role="button" aria-current="page" routerLink="offers"><span class="text"><i class="bi bi-star"></i> Notifications</span></a>
           </li>
           <!-- for customer -->
           <li class="nav-item ms-2">

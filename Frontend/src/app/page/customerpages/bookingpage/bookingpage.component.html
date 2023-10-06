@@ -3,8 +3,7 @@
         <div class="col border d-flex justify-content-center">
             <form [formGroup]="bookticket" (ngSubmit)="onSubmit()">
                 <div class="card" style="width: 18rem;">
-                    <!-- [src]="item.image" -->
-                    <img src="/assets/Jailer.jpg" class="card-img-top" alt="...">
+                    <img [src]="item.image" class="card-img-top" alt="{{item.name}}">
                     <div class="card-body">
                       <h5 class="card-title" Name="name" >{{item.name}}</h5>
                       <hr>

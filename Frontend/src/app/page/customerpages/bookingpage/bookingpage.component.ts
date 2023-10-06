@@ -29,6 +29,7 @@ export class BookingpageComponent implements OnInit {
   isHighlighted: boolean = false;
   selectedSeatsValue: string = '1';
   currentUser:any;
+  numbseats:any;
 
   constructor(private serv:DatasService, private activatedRoute:ActivatedRoute,private fb:FormBuilder,private router:Router,private serv2:LoginService){
     this.bookticket=new FormGroup({
@@ -67,15 +68,18 @@ export class BookingpageComponent implements OnInit {
         "seatsbooked": this.item.seatsbooked,
       })
     })
+    this.updateCus();
   }
 
   getAvailabilityStatus() {
-    if (this.item.seatsbooked < this.item.seats / 2) {
+    if (this.item.seatsbooked < this.item.seats) {
       return 'available';
-    } else if (this.item.seatsbooked == this.item.seats) {
+    } else if ( this.item.seats == 0 ) {
       return 'housefull';
-    } else {
+    } else if (this.item.seatsbooked > this.item.seats || this.item.seatsbooked == this.item.seats ) {
       return 'fastfilling';
+    } else {
+      return 'error';
     }
   }
 
@@ -89,20 +93,19 @@ export class BookingpageComponent implements OnInit {
 
   updateCus(){
     this.currentUser=this.serv2.getUser();
-    
   }
 
 
   onSubmit() {
     const selectedSeats = +this.selectedSeatsValue; // Convert it to a number if it's a string
+    this.numbseats= this.selectedSeatsValue;
     if (selectedSeats <= this.item.seats) {
-      // Update the values in the FormGroup
       this.bookticket.patchValue({
         seatsbooked: this.item.seatsbooked + selectedSeats,
-        seats: this.item.seats - selectedSeats
+        seats: this.item.seats - selectedSeats,
       });
-      // this.updateCus();
-      this.serv.editmovie(this.bookticket.value, this.id).subscribe(data => {
+
+      this.serv.bookmovie(this.bookticket.value, this.id,this.currentUser,this.numbseats).subscribe(data => {
         console.log(data);
         alert("Seat Booked");
         this.router.navigate(['movielist']);
@@ -111,5 +114,4 @@ export class BookingpageComponent implements OnInit {
       alert("Not enough available seats.");
     }
   }
-
 }

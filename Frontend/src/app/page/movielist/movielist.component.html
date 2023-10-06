@@ -1,9 +1,8 @@
-<!-- Carousal -->
+<!-- Banner -->
 <hr>
 <div class="gallery-container d-flex align-items-center justify-content-center bg-dark p-2" id="gallery-container" >
-  <a *ngFor="let item of movie" >
-    <!-- [src]="item.image" -->
-    <img class="img-responsive" src="/assets/Jailer.jpg" >
+  <a *ngFor="let item of movie">
+    <img class="img-responsive" [src]="item.image" alt="Poster of {{item.name}}">
   </a>
 </div>
 <hr>
@@ -13,8 +12,7 @@
     <div class="row d-flex align-items-center justify-content-center mb-5">
         <div class="col col-md-auto mb-5" *ngFor="let item of movie">
             <div class="card" style="width: 18rem;">
-              <!-- [src]="item.image" -->
-                <img src="/assets/Jailer.jpg" class="card-img-top" alt="...">
+                <img [src]="item.image" class="card-img-top" alt="Poster of {{item.name}}">
                 <div class="card-body">
                   <h5 class="card-title">{{item.name}}</h5>
                   <p class="card-text"><i class="bi bi-star"></i> {{item.rating}}</p>
@@ -22,7 +20,6 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">Category : {{item.category}}</li>
                   <li class="list-group-item">Language : {{item.language}}</li>
-                  <li class="list-group-item">{{item.description}}</li>
                 </ul>
                 <div class="card-body">
                   <a (click)="Book(item._id)" class="card-link button-7">Book Now</a>

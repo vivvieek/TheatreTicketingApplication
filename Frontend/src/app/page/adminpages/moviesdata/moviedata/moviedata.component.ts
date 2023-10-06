@@ -12,7 +12,9 @@ export class MoviedataComponent implements OnInit{
 
   movie:any;
 
-  constructor(private serv:DatasService, private router:Router){}
+  constructor(
+    private serv:DatasService, 
+    private router:Router){}
 
   ngOnInit(): void {
     this.serv.getMovie().subscribe((data=>{
@@ -30,5 +32,4 @@ export class MoviedataComponent implements OnInit{
     alert('Data deleted')
     window.location.reload();
   }
-
 }

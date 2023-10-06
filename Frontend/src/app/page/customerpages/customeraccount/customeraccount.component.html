@@ -6,10 +6,12 @@
         <th>Cancel Booking</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td><strong>Fast and Furious</strong></td>
-        <td>3</td>
+    <tbody *ngFor="let user of users">
+      <tr >
+        <td *ngFor="let movie of user.moviebooked"><strong>
+        {{movie}}
+        </strong></td>
+        <td *ngFor="let seat of user.seatsbooked">{{seat}}</td>
         <td>
             <button class="button-35" role="button">Cancel</button>
         </td>

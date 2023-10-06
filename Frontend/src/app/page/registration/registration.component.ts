@@ -43,11 +43,17 @@ export class RegistrationComponent implements OnInit {
   }
 
   // Registration
-  submit(){
-    this.serv.adduser(this.userdetail).subscribe((res=>{
-      alert("Registered Successfully. Now Please Login")
-      window.location.reload();
-    }))
+  submit() {
+    this.serv.adduser(this.userdetail).subscribe(
+      (res) => {
+        alert("Registered Successfully. Now Please Login");
+        window.location.reload();
+      },
+      (error) => {
+        alert("Registration failed");
+        console.error("Registration failed:", error);
+      }
+    );
   }
 
   // Login
@@ -61,6 +67,5 @@ export class RegistrationComponent implements OnInit {
       alert('Invalid credentials');
     }))
   }
-
 
 }

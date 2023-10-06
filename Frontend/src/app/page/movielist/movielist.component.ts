@@ -10,10 +10,12 @@ import { LoginService } from 'src/app/servicefiles/login.service';
 })
 export class MovielistComponent implements OnInit{
 
-  // movie:any;
   movie: any[] = [];
 
-  constructor(private serv:DatasService, private serv2:LoginService, private router:Router){}
+  constructor(
+    private serv:DatasService, 
+    private serv2:LoginService, 
+    private router:Router){}
 
   user:any;
 
@@ -27,9 +29,8 @@ export class MovielistComponent implements OnInit{
         console.error(error);
       }
     );
-
     this.user=this.serv2.getRole();
-    console.log(this.user)
+    // console.log(this.user)
   }
 
   Book(id:any){
@@ -44,7 +45,4 @@ export class MovielistComponent implements OnInit{
     }
   }
 
-
 }
-
-
