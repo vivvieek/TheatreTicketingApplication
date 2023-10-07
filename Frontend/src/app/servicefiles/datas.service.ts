@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,20 +12,7 @@ export class DatasService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http:HttpClient, public fb:FormBuilder) { }
-
-  form: FormGroup = this.fb.group({
-    name: [''],
-    language: [''],
-    category: [''],
-    cast: [''],
-    description: [''],
-    rating: [''],
-    seats: [''],
-    price: [''],
-    screen: [''],
-    image: [null]
-  })
+  constructor(private http:HttpClient) { }
 
 
   // view details
@@ -51,18 +38,7 @@ export class DatasService {
   }
 
   // Add movie
-  addmovie(movie:any,profileImage:File):Observable<any>{
-    let formData = new FormData();
-    formData.append('name' , movie.name);
-    formData.append('category' , movie.category);
-    formData.append('language' , movie.language);
-    formData.append('cast' , movie.cast);
-    formData.append('description' , movie.description);
-    formData.append('rating' , movie.rating);
-    formData.append('seats' , movie.seats);
-    formData.append('price' , movie.price);
-    formData.append('screen' , movie.screen);
-    formData.append('image' , movie.image);
+  addmovie(formData:any):Observable<any>{
     return this.http.post(`${this.apiUrl}/addmovie` , formData)
   }
 
