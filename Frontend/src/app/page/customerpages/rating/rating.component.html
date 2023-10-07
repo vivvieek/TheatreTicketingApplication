@@ -1,31 +1,31 @@
 <div class="container text-center mt-5 mb-5 ">
     <div class="row">
         <div class="col d-flex justify-content-center ">
-            <form >
+            <form [formGroup]="ratemovie" (ngSubmit)="onsubmit()">
                 <div class="card p-1" style="width: 18rem;">
-                    <img src="/assets/Elemental.jpg" class="card-img-top" alt="image">
+                    <img [src]="item.image" class="card-img-top" alt="image">
                     <div class="card-body">
-                        <h5 class="card-title" Name="name" >Elemental</h5>
+                        <h5 class="card-title" Name="name" >{{item.name}}</h5>
                         <hr>
                         <div class="rating ms-5">
-                            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-                            <input type="radio" id="star4half" name="rating" value="4.5" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-                            <input type="radio" id="star3half" name="rating" value="3.5" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-                            <input type="radio" id="star2half" name="rating" value="2.5" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-                            <input type="radio" id="star1half" name="rating" value="1.5" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-                            <input type="radio" id="starhalf" name="rating" value="0.5" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                            <input type="radio" id="star5" name="rating" value="5" #rating5 (change)="rateselected(rating5.value)" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                            <input type="radio" id="star4half" name="rating" value="4.5" #rating45 (change)="rateselected(rating45.value)" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                            <input type="radio" id="star4" name="rating" value="4" #rating4 (change)="rateselected(rating4.value)"/><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                            <input type="radio" id="star3half" name="rating" value="3.5" #rating35 (change)="rateselected(rating35.value)" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                            <input type="radio" id="star3" name="rating" value="3" #rating3 (change)="rateselected(rating3.value)"/><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                            <input type="radio" id="star2half" name="rating" value="2.5" #rating25 (change)="rateselected(rating25.value)"/><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                            <input type="radio" id="star2" name="rating" value="2" #rating2 (change)="rateselected(rating2.value)"/><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                            <input type="radio" id="star1half" name="rating" value="1.5" #rating15 (change)="rateselected(rating15.value)"/><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                            <input type="radio" id="star1" name="rating" value="1" #rating1 (change)="rateselected(rating1.value)"/><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                            <input type="radio" id="starhalf" name="rating" value="0.5" #rating05 (change)="rateselected(rating05.value)"/><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
                         </div>
                         <hr>
                     </div>
                     <label for="review">Review</label>
-                    <textarea id="review"></textarea>
+                    <textarea id="review" #review (change)="reviewselected(review.value)" ></textarea>
                     <br>
                     <div class="container">
-                        <button class="button-24">Rate</button>
+                        <button class="button-24" >Rate</button>
                     </div>
 
                 </div>
@@ -34,23 +34,6 @@
 
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

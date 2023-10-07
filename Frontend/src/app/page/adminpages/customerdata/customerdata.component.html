@@ -71,7 +71,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody *ngFor="let rate of rating">
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
@@ -82,16 +82,16 @@
                             </td>
                             <td>
                                 <span> 
-                                </span>Jailer
+                                </span>{{rate.movie}}
                             </td>
                             <td>
-                                <span>Ramesh</span>
+                                <span>{{rate.username}}</span>
                             </td>
                             <td>
-                                <span>Nice Movie</span>
+                                <span>{{rate.review}}</span>
                             </td>
                             <td>
-                                <button type="button"  class="btn btn-link btn-sm btn-rounded text-primary">
+                                <button type="button"  class="btn btn-link btn-sm btn-rounded text-primary" (click)="deleterating(rate._id)">
                                     <i class="me-1 action-icon bi bi-file-earmark-richtext text-primary" ></i>Delete
                                 </button>
                             </td>

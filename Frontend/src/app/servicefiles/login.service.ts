@@ -36,6 +36,7 @@ export class LoginService {
     return null;
   }
 
+  // Get user mailid
   getUser():string|null{
     const token=localStorage.getItem('token');
     if(token){

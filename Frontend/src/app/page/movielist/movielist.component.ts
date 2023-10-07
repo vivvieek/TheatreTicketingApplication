@@ -45,4 +45,16 @@ export class MovielistComponent implements OnInit{
     }
   }
 
+  Rate(id:any){
+    if(this.user==='customer'){
+      this.router.navigate(['rate/'+id]);
+    }
+    else if(this.user==='admin'){
+      this.router.navigate(['movielist']);
+    }
+    else{
+      this.router.navigate(['login']);
+    }
+  }
+
 }

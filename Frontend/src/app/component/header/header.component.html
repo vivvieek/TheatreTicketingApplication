@@ -28,9 +28,6 @@
           <li class="nav-item ms-2">
             <a class="button-31 nav-link active text-light" *ngIf="isCustomer" role="button" aria-current="page" routerLink="customeracc"><span class="text"><i class="bi bi-bookmark-star"></i> My Account</span></a>
           </li>
-          <li class="nav-item ms-2">
-            <a class="button-31 nav-link active text-light" *ngIf="isCustomer" role="button" aria-current="page" routerLink="rate"><span class="text"><i class="bi bi-clock-history"></i> Rate Movies</span></a>
-          </li>
         </ul>
         <button class="button-85 d-flex bd-highlight" *ngIf="isSignin" role="button" routerLink="login"><span class="text"><i class="bi bi-box-arrow-in-right"></i> SignIn</span></button>
         <button class="button-85 d-flex bd-highlight" *ngIf="isSignout" role="button" (click)="logOut()"><span class="text"><i class="bi bi-box-arrow-in-right"></i> SignOut</span></button>

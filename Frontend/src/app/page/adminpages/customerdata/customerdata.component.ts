@@ -9,6 +9,7 @@ import { DatasService } from 'src/app/servicefiles/datas.service';
 export class CustomerdataComponent implements OnInit {
 
   users:any[]=[];
+  rating:any;
 
   constructor(private serv:DatasService){}
 
@@ -25,12 +26,32 @@ export class CustomerdataComponent implements OnInit {
         console.error(error);
       }
     );
+
+    this.serv.getrating().subscribe(
+      (rating)=>{
+        this.rating =rating;
+      },
+      (error) => {
+        console.error(error);
+      }
+    )
   }
 
   deleteUser(userId: string): void {
     this.serv.deleteCus(userId).subscribe(() => {
         this.fetchCus();
         alert('User Deleted');
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  deleterating(userId: string): void {
+    this.serv.delreview(userId).subscribe(() => {
+        this.fetchCus();
+        alert('Review Deleted');
       },
       (error) => {
         console.error(error);

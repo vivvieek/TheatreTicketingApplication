@@ -14,7 +14,7 @@ export class BookingpageComponent implements OnInit {
   bookticket!:FormGroup;
   item:any={
     name:'',
-    category: '',
+    category: '', 
     language: '',
     cast: '',
     description: '',
@@ -108,7 +108,7 @@ export class BookingpageComponent implements OnInit {
       this.serv.bookmovie(this.bookticket.value, this.id,this.currentUser,this.numbseats).subscribe(data => {
         console.log(data);
         alert("Seat Booked");
-        this.router.navigate(['movielist']);
+        this.router.navigate(['customeracc']);
       });
     } else {
       alert("HouseFull !");

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatasService } from 'src/app/servicefiles/datas.service';
 import { LoginService } from 'src/app/servicefiles/login.service';
 
@@ -12,7 +13,11 @@ export class CustomeraccountComponent implements OnInit {
   currentUser:any;
   item:any;
 
-  constructor(private serv:DatasService, private serv2:LoginService){}
+  constructor(
+      private serv:DatasService,
+      private serv2:LoginService,
+      private router:Router
+     ){}
 
 
   ngOnInit(): void {
@@ -33,7 +38,5 @@ export class CustomeraccountComponent implements OnInit {
     alert('Movie cancelled')
     this.moviesbooked();
   }
-
-
 
 }

@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class DatasService {
 
+  private apiUrl = 'http://localhost:3000'
+
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http:HttpClient, public fb:FormBuilder) { }
@@ -26,26 +28,29 @@ export class DatasService {
   })
 
 
-  // Customer details
+  // view details
   getCus(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3000/viewcus');
+    return this.http.get<any[]>(`${this.apiUrl}/viewcus`);
   }
+  // delete customer
   deleteCus(userId: string): Observable<any> {
-    return this.http.delete<any>(`http://localhost:3000/delcus/${userId}`);
+    return this.http.delete<any>(`${this.apiUrl}/delcus/${userId}`);
   }
 
-  // Notications
+  // Add notification
   addmessage(data:any){
-    return this.http.post<any>('http://localhost:3000/addmess',data);
+    return this.http.post<any>(`${this.apiUrl}/addmess`,data);
   }
+  // Delete notification
   delmessage(id:any){
-    return this.http.delete(`http://localhost:3000/deletemess/${id}`)
+    return this.http.delete(`${this.apiUrl}/deletemess/${id}`)
   }
+  // View notification
   viewmessage(){
-    return this.http.get('http://localhost:3000/viewmess');
+    return this.http.get(`${this.apiUrl}/viewmess`);
   }
 
-  // Movie details
+  // Add movie
   addmovie(movie:any,profileImage:File):Observable<any>{
     let formData = new FormData();
     formData.append('name' , movie.name);
@@ -58,38 +63,50 @@ export class DatasService {
     formData.append('price' , movie.price);
     formData.append('screen' , movie.screen);
     formData.append('image' , movie.image);
-    return this.http.post(`http://localhost:3000/addmovie` , formData)
-  }
-  getMovie(): Observable<any[]> {
-    return this.http.get<any[]>('http://localhost:3000/viewmovie');
-  }
-  getonemovie(id:any){
-    return this.http.get(`http://localhost:3000/getonemovie/${id}`)
-  }
-  editmovie(updatedData:any,id:any){
-    return this.http.put(`http://localhost:3000/editmovie/${id}`,updatedData)
-  }
-  delmovie(id:any){
-    return this.http.delete(`http://localhost:3000/deletemovie/${id}`)
+    return this.http.post(`${this.apiUrl}/addmovie` , formData)
   }
 
+  // Get all movie
+  getMovie(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/viewmovie`);
+  }
+  // Get one movie
+  getonemovie(id:any){
+    return this.http.get(`${this.apiUrl}/getonemovie/${id}`)
+  }
+  // Edit movie
+  editmovie(updatedData:any,id:any){
+    return this.http.put(`${this.apiUrl}/editmovie/${id}`,updatedData)
+  }
+  // Delete movie
+  delmovie(id:any){
+    return this.http.delete(`${this.apiUrl}/deletemovie/${id}`)
+  }
   // Book movie
   bookmovie(updatedData:any,id:any,data1:any,data2:any){
-    return this.http.put(`http://localhost:3000/bookmovie/${id}`,{updatedData,data1,data2})
+    return this.http.put(`${this.apiUrl}/bookmovie/${id}`,{updatedData,data1,data2})
   }
-
   // Get booked data
   getbookedmovies(user:any){
-    return this.http.get(`http://localhost:3000/bookeddata?user=${user}`)
+    return this.http.get(`${this.apiUrl}/bookeddata?user=${user}`)
   }
-
   // cancel movie
   cancelmovie(id:any){
-    return this.http.delete(`http://localhost:3000/cancelmovie/${id}`)
+    return this.http.delete(`${this.apiUrl}/cancelmovie/${id}`)
+  }
+  // Add review
+  addreview(data1:any, data2:any, data3:any){
+    return this.http.post<any>(`${this.apiUrl}/addreview`,{data1,data2, data3});
+  }
+  // View rating
+  getrating(){
+    return this.http.get(`${this.apiUrl}/getrating`);
+  }
+  // Delete review
+  delreview(id:any){
+    return this.http.delete(`${this.apiUrl}/deleterating/${id}`)
   }
 }
-
-
 
 
 

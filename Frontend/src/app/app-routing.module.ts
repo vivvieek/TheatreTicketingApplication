@@ -26,7 +26,7 @@ const routes: Routes = [
   {path:'booking/:id',component:BookingpageComponent},
   {path:'addmovie',component:AddmovieComponent},
   {path:'offers',component:OffersComponent},
-  {path:'rate',component:RatingComponent},
+  {path:'rate/:id',component:RatingComponent},
 
   {path:'header',component:HeaderComponent},
   {path:'footer',component:FooterComponent},

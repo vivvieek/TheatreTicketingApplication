@@ -9,7 +9,7 @@ const User=require("../model/customerschema");
 const Noti = require('../model/notificationschema');
 const Movie = require('../model/movieschema');
 const MovieBooked = require('../model/moviebooked');
-const Review =require('../model/ratingschema');
+const Review = require('../model/ratingschema')
 
 require('dotenv').config()
 
@@ -288,23 +288,23 @@ router.put('/bookmovie/:_id', async (req, res) => {
     });
     await movieBooked.save();
 
-    const mailOptions = {
-      from: process.env.myemail, 
-      to: uemail,                        
-      subject: 'Booking Confirmation',
-      text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
+    // const mailOptions = {
+    //   from: process.env.myemail, 
+    //   to: uemail,                        
+    //   subject: 'Booking Confirmation',
+    //   text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
       
-      Thank you
-      Watch Now Theatres
-      +91 9999999999`, 
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending email:', error);
-      } else {
-        console.log('Email sent:', info.response);
-      }
-    });
+    //   Thank you
+    //   Watch Now Theatres
+    //   +91 9999999999`, 
+    // };
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     console.error('Error sending email:', error);
+    //   } else {
+    //     console.log('Email sent:', info.response);
+    //   }
+    // });
 
     res.json(updated);
   } catch (error) {
@@ -343,11 +343,72 @@ router.delete('/cancelmovie/:_id',(req, res) => {
 });
 
 // Rate Movie
+router.post('/addrating', (req,res)=>{
+  console.log(req.body);
+  const newReview=new Review({
+    username: req.body.user,
+    movie: req.body.movie,
+    review: req.body.review,
+  });
+  newReview.save()
+    .then(()=>{
+      res.status(200).json({message:'Review Added'});
+    })
+    .catch((error)=>{
+      res.status(500).json({error:'Failed to Add Review'});
+    })
+})
 
-// Get rated movie details
+// Add Review
+router.post('/addreview', async (req, res) => {
+  try {
+    const existingReview = await Review.findOne({
+      username: req.body.data1,
+      movie: req.body.data2,
+    });
+
+    if (existingReview) {
+      return res.status(400).json({ error: 'User already reviewed this movie' });
+    }
+
+    const newReview = new Review({
+      username: req.body.data1,
+      movie: req.body.data2,
+      review: req.body.data3,
+    });
+
+    await newReview.save();
+    res.status(200).json({ message: 'Review Added' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to Add Review' });
+  }
+});
+
+// view all rating
+router.get('/getrating',(req,res)=>{
+  Review.find()
+  .then((review)=>{
+    res.status(200).json(review);
+  })
+  .catch((error)=>{
+    res.status(500).json({error:'Failed to Fetch'});
+  })
+});
 
 // Delete a rating
-
+router.delete('/deleterating/:_id',(req, res) => {
+  Review.findByIdAndRemove(req.params._id)
+  .then((review)=>{
+    if (review){
+      res.status(200).json({message:'Message deleted successfully'});
+    }else{
+      res.status(404).json({error:'Message not found'});
+    }
+  })
+  .catch((error)=>{
+    res.status(500).json({error:'Failed to delete Message'});
+  });
+});
 
 
 // token verification
