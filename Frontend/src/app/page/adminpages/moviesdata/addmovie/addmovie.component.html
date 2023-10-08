@@ -3,17 +3,26 @@
       <form [formGroup]="form" (submit)="onSubmit()" >
         <h1> Add Movie </h1>
         <fieldset>
-            <label for="name">Movie Name:</label>
-            <input type="text" id="name" formControlName="name" required  >
+            <label for="name">Movie Name: 
+              <span class="text-danger" *ngIf="form.get('name')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('name')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <input type="text" id="name" formControlName="name" required >
 
-            <label>Select Category:</label>
+            <label>Select Category: 
+              <span class="text-danger" *ngIf="form.get('category')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('category')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
                 <input type="radio" id="UA"  value="UA" formControlName="category"  ><label for="UA" class="light me-4">UA</label>
                 <input type="radio" id="A" value="A" formControlName="category"  ><label for="A" class="light me-4">A</label>
                 <input type="radio" id="PG" value="PG" formControlName="category"  ><label for="PG" class="light me-4">PG</label>
             <br><br>
 
-            <label for="language">Language:</label>
-            <select id="language" formControlName="language"  >
+            <label for="language">Language: 
+              <span class="text-danger" *ngIf="form.get('language')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('language')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <select id="language" formControlName="language" required >
                 <option value="Malayalam">Malayalam</option>
                 <option value="Hindi">Hindi</option>
                 <option value="Tamil">Tamil</option>
@@ -21,23 +30,38 @@
                 <option value="English">English</option>
             </select>
         
-            <label for="cast">Cast Details:</label>
-            <textarea id="cast" formControlName="cast"  ></textarea>
+            <label for="cast">Cast Details: 
+              <span class="text-danger" *ngIf="form.get('cast')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('cast')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <textarea id="cast" formControlName="cast" required ></textarea>
 
-            <label for="description">Description:</label>
-            <textarea id="description" formControlName="description"  ></textarea>
+            <label for="description">Description: 
+              <span class="text-danger" *ngIf="form.get('description')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('description')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <textarea id="description" formControlName="description" required ></textarea>
 
-            <label for="rating">Rating:</label>
-            <input type="text" id="rating" formControlName="rating"  >
+            <label for="rating">Rating: (1-5) 
+              <span class="text-danger" *ngIf="form.get('rating')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('rating')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <input type="text" id="rating" formControlName="rating" required >
 
-            <label for="seats">Seats:</label>
-            <input type="text" id="seats" formControlName="seats" >
+            <label for="seats">Seats: (30-50) 
+              <span class="text-danger" *ngIf="form.get('seats')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('seats')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <input type="text" id="seats" formControlName="seats" required>
 
-            <label for="price">Price:</label>
-            <input type="text" id="price" formControlName="price"  >
+            <label for="price">Price: (150-300) 
+              <span class="text-danger" *ngIf="form.get('price')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('price')?.valid" ><i class="bi bi-dot"></i></span>
+            </label> 
+            <input type="text" id="price" formControlName="price" >
 
-            <label for="screen">Screen:</label>
-            <select id="screen" formControlName="screen"  >
+            <label for="screen">Screen: <span class="text-danger" *ngIf="form.get('screen')?.invalid" ><i class="bi bi-dot"></i></span></label>
+            <select id="screen" formControlName="screen" required >
                 <option value="Screen 1">Screen 1</option>
                 <option value="Screen 2">Screen 2</option>
                 <option value="Screen 3">Screen 3</option>
@@ -51,7 +75,7 @@
                   <img id="file-ip-1-preview">
                 </div>
                 <label for="file-ip-1">Upload Poster</label>
-                <input type="file" id="file-ip-1" name="image" accept="image/*"  selectedFile (change)="onSelectImage($event);showPreview($event)" required>
+                <input type="file" id="file-ip-1" name="image" accept="image/*"  selectedFile (change)="onSelectImage($event);showPreview($event)">
               </div>
             </div>
         </fieldset>
