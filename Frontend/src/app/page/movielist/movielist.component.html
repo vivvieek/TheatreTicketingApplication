@@ -22,8 +22,9 @@
                   <li class="list-group-item">Language : {{item.language}}</li>
                 </ul>
                 <div class="card-body">
-                  <a (click)="Book(item._id)" class="card-link button-7">Book Now</a>
-                  <a (click)="Rate(item._id)" class="card-link button-7 ms-1" title="Rate Movie"><i class="bi bi-heart-fill"></i></a>
+                  <a *ngIf="isadmin" (click)="Book(item._id)" class="card-link button-7">Edit</a>
+                  <a *ngIf="iscustomer" (click)="Book(item._id)" class="card-link button-7">Book Now</a>
+                  <a *ngIf="iscustomer" (click)="Rate(item._id)" class="card-link button-7 ms-1" title="Rate Movie"><i class="bi bi-heart-fill"></i></a>
                 </div>
             </div>
         </div>

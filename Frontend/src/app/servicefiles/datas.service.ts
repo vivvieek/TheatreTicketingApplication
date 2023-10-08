@@ -59,8 +59,8 @@ export class DatasService {
     return this.http.delete(`${this.apiUrl}/deletemovie/${id}`)
   }
   // Book movie
-  bookmovie(updatedData:any,id:any,data1:any,data2:any){
-    return this.http.put(`${this.apiUrl}/bookmovie/${id}`,{updatedData,data1,data2})
+  bookmovie(updatedData:any,id:any,data1:any,data2:any, data3:any){
+    return this.http.put(`${this.apiUrl}/bookmovie/${id}`,{updatedData,data1,data2,data3})
   }
   // Get booked data
   getbookedmovies(user:any){

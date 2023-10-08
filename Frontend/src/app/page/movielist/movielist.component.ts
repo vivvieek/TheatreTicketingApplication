@@ -12,6 +12,9 @@ export class MovielistComponent implements OnInit{
 
   movie: any[] = [];
 
+  iscustomer=true;
+  isadmin=true;
+
   constructor(
     private serv:DatasService, 
     private serv2:LoginService, 
@@ -30,7 +33,22 @@ export class MovielistComponent implements OnInit{
       }
     );
     this.user=this.serv2.getRole();
-    // console.log(this.user)
+    this.visibility();
+  }
+
+  visibility(){
+    if(this.user==='customer'){
+      this.isadmin=false;
+      this.iscustomer=true;
+    }
+    else if(this.user==='admin'){
+      this.isadmin=true;
+      this.iscustomer=false;
+    }
+    else{
+      this.isadmin=false;
+      this.iscustomer=true;
+    }
   }
 
   Book(id:any){

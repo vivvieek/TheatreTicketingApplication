@@ -4,6 +4,7 @@ const cors = require('cors');
 const jwt = require ('jsonwebtoken');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 const User=require("../model/customerschema");
 const Noti = require('../model/notificationschema');
@@ -12,6 +13,35 @@ const MovieBooked = require('../model/moviebooked');
 const Review = require('../model/ratingschema')
 
 require('dotenv').config()
+
+const directory='./images'
+const storage=multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null,directory)
+  },
+  filename:(req,file,cb)=>{
+    const filename=file.originalname.toLowerCase().split(' ').join('-')
+    cb(null,filename)
+  }
+})
+var upload=multer({
+  storage:storage,
+  limits:{
+    fileSize:1024*1024*10,
+  },
+  fileFilter:(req,file,cb)=>{
+    if(
+      file.mimetype=='image/png'||
+      file.mimetype=='image/jpg'||
+      file.mimetype=='image/jpeg'
+    ){
+      cb(null,true)
+    } else{
+      cb(null,false)
+      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'))
+    }
+  }
+})
 
 const transporter=nodemailer.createTransport({
   service:"hotmail", 
@@ -156,34 +186,6 @@ router.delete('/deletemess/:_id',(req, res) => {
 });
 
 // Add movie
-const directory='./images'
-const storage=multer.diskStorage({
-  destination:(req,file,cb)=>{
-    cb(null,directory)
-  },
-  filename:(req,file,cb)=>{
-    const filename=file.originalname.toLowerCase().split(' ').join('-')
-    cb(null,filename)
-  }
-})
-var upload=multer({
-  storage:storage,
-  limits:{
-    fileSize:1024*1024*10,
-  },
-  fileFilter:(req,file,cb)=>{
-    if(
-      file.mimetype=='image/png'||
-      file.mimetype=='image/jpg'||
-      file.mimetype=='image/jpeg'
-    ){
-      cb(null,true)
-    } else{
-      cb(null,false)
-      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'))
-    }
-  }
-})
 router.post('/addmovie', upload.single('image'), async (req, res) => {
   console.log(req.body);
   const url=req.protocol + '://' + req.get('host');
@@ -251,11 +253,10 @@ router.delete('/deletemovie/:_id', (req, res) => {
       if (!movie) {
         return res.status(404).json({ error: 'Movie not found' });
       }
-
       const movieName = movie.name;
       MovieBooked.deleteMany({ movie: movieName })
         .then(() => {
-          res.status(200).json({ message: 'Movie deleted successfully' });
+            res.status(200).json({ message: 'Movie deleted successfully' });
         })
         .catch((error) => {
           res.status(500).json({ error: 'Failed to delete related data from MovieBooked' });
@@ -273,6 +274,7 @@ router.put('/bookmovie/:_id', async (req, res) => {
     let updateData = req.body.updatedData;
     let uemail = req.body.data1;
     let seatno = req.body.data2;
+    let totalprice =req.body.data3;
 
     const updated = await Movie.findByIdAndUpdate(id, updateData, { new: true });
 
@@ -288,23 +290,23 @@ router.put('/bookmovie/:_id', async (req, res) => {
     });
     await movieBooked.save();
 
-    // const mailOptions = {
-    //   from: process.env.myemail, 
-    //   to: uemail,                        
-    //   subject: 'Booking Confirmation',
-    //   text: `Your booking for ${seatno} Seat(s) for ${updateData.name} movie is confirmed.
+    const mailOptions = {
+      from: process.env.myemail, 
+      to: uemail,                        
+      subject: 'Booking Confirmation',
+      text: `Your booking for ${seatno} Seat(s) for ${updateData.name} (movie) is confirmed. The movie is shown on ${updateData.screen}. Total amount for booking is : Rs.${totalprice}.
       
-    //   Thank you
-    //   Watch Now Theatres
-    //   +91 9999999999`, 
-    // };
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //   if (error) {
-    //     console.error('Error sending email:', error);
-    //   } else {
-    //     console.log('Email sent:', info.response);
-    //   }
-    // });
+      Thank you
+      Watch Now Theatres
+      +91 9999999999`, 
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
 
     res.json(updated);
   } catch (error) {
@@ -328,18 +330,54 @@ router.get('/bookeddata', async (req, res) => {
 });
 
 // Cancel booking
-router.delete('/cancelmovie/:_id',(req, res) => {
+router.delete('/cancelmovie/:_id', (req, res) => {
+  let cancelledMovie;
+  let cancelledseats;
+  let user;
+
   MovieBooked.findByIdAndRemove(req.params._id)
-  .then((movie)=>{
-    if (movie){
-      res.status(200).json({message:'Movie Cancelled'});
-    }else{
-      res.status(404).json({error:'Movie not found'});
-    }
-  })
-  .catch((error)=>{
-    res.status(500).json({error:'Failed to cancel'});
-  });
+    .then((movie) => {
+      if (movie) {
+        cancelledMovie = movie.movie;
+        cancelledseats = movie.seats;
+        user = movie.username;
+        res.status(200).json({ message: 'Movie Cancelled' });
+      } else {
+        res.status(404).json({ error: 'Movie not found' });
+      }
+    })
+    .then(() => {
+      return Movie.findOne({ name: cancelledMovie });
+    })
+    .then((update) => {
+      if (update) {
+        update.seats += cancelledseats;
+        update.seatsbooked -= cancelledseats;
+        return update.save(); 
+      }
+    })
+    .then(() => {
+      const mailOptions = {
+        from: process.env.myemail, 
+        to: user,                        
+        subject: 'Booking Cancellation',
+        text: `Your booking for ${cancelledseats} Seat(s) for ${cancelledMovie} (movie) is cancelled. Booking amount will be Refunded after 5% reduction.
+        
+        Thank you
+        Watch Now Theatres
+        +91 9999999999`, 
+      };
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to cancel' });
+    });
 });
 
 // Rate Movie

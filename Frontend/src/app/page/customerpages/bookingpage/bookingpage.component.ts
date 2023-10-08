@@ -30,6 +30,7 @@ export class BookingpageComponent implements OnInit {
   selectedSeatsValue: string = '1';
   currentUser:any;
   numbseats:any;
+  isCheckboxSelected: boolean = false;
 
   constructor(private serv:DatasService, private activatedRoute:ActivatedRoute,private fb:FormBuilder,private router:Router,private serv2:LoginService){
     this.bookticket=new FormGroup({
@@ -95,17 +96,23 @@ export class BookingpageComponent implements OnInit {
     this.currentUser=this.serv2.getUser();
   }
 
+  onCheckboxChange() {
+    this.isCheckboxSelected = !this.isCheckboxSelected;
+  }
+
 
   onSubmit() {
-    const selectedSeats = +this.selectedSeatsValue; // Convert it to a number if it's a string
+    const selectedSeats = +this.selectedSeatsValue; //convert to number
     this.numbseats= this.selectedSeatsValue;
+    const price = +this.item.price;
+    const totalprice = price*this.numbseats;
     if (selectedSeats <= this.item.seats) {
       this.bookticket.patchValue({
         seatsbooked: this.item.seatsbooked + selectedSeats,
         seats: this.item.seats - selectedSeats,
       });
 
-      this.serv.bookmovie(this.bookticket.value, this.id,this.currentUser,this.numbseats).subscribe(data => {
+      this.serv.bookmovie(this.bookticket.value, this.id,this.currentUser,this.numbseats,totalprice).subscribe(data => {
         console.log(data);
         alert("Seat Booked");
         this.router.navigate(['customeracc']);

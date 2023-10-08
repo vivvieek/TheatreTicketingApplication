@@ -80,7 +80,7 @@ export class RatingComponent implements OnInit{
       })
     ).subscribe(
       (editMovieResult) => {
-        alert("Reviews posted");
+        alert("Review posted");
         this.router.navigate(['']);
       },
       (error) => {

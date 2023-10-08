@@ -64,18 +64,18 @@
 
                                         <li>
                                             <div class=' form-field form-field__checkbox'>
-                                                <input type="checkbox" (click)="highlightDiv()" id='flexibleDates' required>
+                                                <input type="checkbox" (click)="highlightDiv();onCheckboxChange()" id='flexibleDates' required>
                                             </div>
-                                            <label for="flexibleDates">I agree to all the **Terms and Conditions</label>
+                                            <label for="flexibleDates">I agree to all the <b>**Terms and Conditions</b></label>
                                         </li>
                                         <li>
-                                            <input type="submit" id='bookingSubmit' class='form__submit' value='Book Now'>
+                                            <input type="submit" id='bookingSubmit' class='form__submit' value='Book Now' [disabled]="!isCheckboxSelected" >
                                         </li>
                                     </ul>       
                                 </div>
                                 <div id="h6" [ngClass]="{'highlighted': isHighlighted}">
-                                    **The seating arrangement for the theater comprises six rows, each containing five seats. Booking for seats follows the "first come, first served" rule, commencing from the last row on the right-hand side.
-                                    Customers are permitted to book a maximum of six tickets in a single transaction. If more than six tickets are required, a separate booking transaction is necessary with another account. 
+                                    **Booking for seats follows the "first come, first served" rule, commencing from the last row on the right-hand side. 
+                                    Customers are permitted to book a maximum of ten tickets in a single transaction. If more than ten tickets are required, a separate booking transaction is necessary. 
                                 </div>
                             </div>
                         </div>
