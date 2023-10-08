@@ -11,11 +11,18 @@ app.use(morgan("dev"));
 
 const db = require("../Backend/db/index");
 
+
 require('dotenv').config()
 const PORT=process.env.PORT;
 
 const api=require("../Backend/router/router");
 app.use('/',api);
+
+const path = require('path');
+app.use(express.static(`./dist/frontend`));
+app.get(`/*`,function(req,res){
+  res.sendFile(path.join(__dirname+'/dist/frontend/index.html'));
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
