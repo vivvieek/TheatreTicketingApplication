@@ -31,6 +31,14 @@ export class BookingpageComponent implements OnInit {
   currentUser:any;
   numbseats:any;
   isCheckboxSelected: boolean = false;
+  // reviews:any={
+  //   username:'',
+  //   movie:'',
+  //   review:'',
+  // }
+  reviews: any[] = [];
+  currentMovie:any;
+  ismovierate=false;
 
   constructor(private serv:DatasService, private activatedRoute:ActivatedRoute,private fb:FormBuilder,private router:Router,private serv2:LoginService){
     this.bookticket=new FormGroup({
@@ -69,6 +77,7 @@ export class BookingpageComponent implements OnInit {
         "seatsbooked": this.item.seatsbooked,
       })
     })
+    this.getreview();
     this.updateCus();
   }
 
@@ -82,6 +91,13 @@ export class BookingpageComponent implements OnInit {
     } else {
       return 'error';
     }
+  }
+
+
+  getreview(){
+    this.serv.getrating().subscribe((review)=>{
+      this.reviews = Object.values(review);
+    })
   }
 
   highlightDiv() {
@@ -102,7 +118,7 @@ export class BookingpageComponent implements OnInit {
 
 
   onSubmit() {
-    const selectedSeats = +this.selectedSeatsValue; //convert to number
+    const selectedSeats = +this.selectedSeatsValue; 
     this.numbseats= this.selectedSeatsValue;
     const price = +this.item.price;
     const totalprice = price*this.numbseats;

@@ -60,13 +60,17 @@
             </label> 
             <input type="text" id="price" formControlName="price" >
 
-            <label for="screen">Screen: <span class="text-danger" *ngIf="form.get('screen')?.invalid" ><i class="bi bi-dot"></i></span></label>
+            <label for="screen">Screen: 
+              <span class="text-danger" *ngIf="form.get('screen')?.invalid" ><i class="bi bi-dot"></i></span>
+              <span class="text-success" *ngIf="form.get('screen')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
             <select id="screen" formControlName="screen" required >
                 <option value="Screen 1">Screen 1</option>
                 <option value="Screen 2">Screen 2</option>
                 <option value="Screen 3">Screen 3</option>
                 <option value="Screen 4">Screen 4</option>
                 <option value="Screen 5">Screen 5</option>
+                <option value="Screen 6">Screen 6</option>
             </select>
 
             <div class="center">

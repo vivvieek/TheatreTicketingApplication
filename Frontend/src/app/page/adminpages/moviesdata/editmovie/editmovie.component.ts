@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatasService } from 'src/app/servicefiles/datas.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editmovie',
@@ -11,25 +11,24 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class EditmovieComponent {
 
   editmovie!:FormGroup
+  imagePreview: any;
 
   constructor(
     private serv:DatasService, 
     private activatedRoute:ActivatedRoute,
     private fb:FormBuilder,
     private router:Router){
-
-      this.editmovie=new FormGroup({
-        "name": new FormControl(""),
-        "category": new FormControl(""),
-        "language": new FormControl(""),
-        "cast": new FormControl(""),
-        "description": new FormControl(""),
-        "rating": new FormControl(""),
-        "seats": new FormControl(""),
-        "price": new FormControl(""),
-        "screen": new FormControl(""),
-      })
-
+      this.editmovie = this.fb.group({
+        name: ['', Validators.required], 
+        category: ['', Validators.required], 
+        language: ['', Validators.required],
+        cast: ['', Validators.required],
+        description: ['', Validators.required], 
+        rating: ['', [Validators.required, Validators.pattern(/^[1-5]$/)]],
+        seats: ['', [Validators.required, Validators.pattern(/^(3[0-9]|4[0-9]|50)$/)]],
+        price: ['', [Validators.required, Validators.pattern(/^(?:30\d|2[0-9][0-9]|1[5-9][0-9]|150)$/)]],
+        screen: ['', Validators.required],
+      });
   }
   
   item:any;
@@ -54,13 +53,19 @@ export class EditmovieComponent {
     })
   }
 
-  onsubmit(){
-    console.log(this.editmovie.value)
-    this.serv.editmovie(this.editmovie.value,this.id).subscribe(data=>{
-      console.log(data)
-      alert("Detail updated")
-      this.router.navigate(['movielist'])
-    })
+
+
+  onsubmit() {
+    if (this.editmovie.valid) {
+      console.log(this.editmovie.value);
+      this.serv.editmovie(this.editmovie.value, this.id).subscribe(data => {
+        console.log(data);
+        alert("Detail updated");
+        this.router.navigate(['movielist']);
+      });
+    } else {
+      alert("Please fill in all required fields with valid values.");
+    }
   }
 
 }

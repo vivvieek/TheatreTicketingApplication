@@ -136,7 +136,9 @@ router.delete('/delcus/:id', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
     const userEmail = user.email;
+    // Seats wont get updated in movie schema
     await MovieBooked.deleteMany({ username: userEmail });
+    await Review.deleteMany({username: userEmail})
     await User.findByIdAndRemove(req.params.id);
     res.status(200).json({ message: 'User and related MovieBooked records deleted successfully' });
   } catch (error) {
@@ -246,6 +248,7 @@ router.put('/editmovie/:_id', async (req, res) => {
   }
 })
 
+
 // Delete Movie
 router.delete('/deletemovie/:_id', (req, res) => {
   Movie.findByIdAndRemove(req.params._id)
@@ -257,6 +260,12 @@ router.delete('/deletemovie/:_id', (req, res) => {
       MovieBooked.deleteMany({ movie: movieName })
         .then(() => {
             res.status(200).json({ message: 'Movie deleted successfully' });
+        })
+        .then(()=>{
+            return Review.findOneAndDelete({movie: movieName});
+        })
+        .then(()=>{
+            return MovieBooked.findOneAndDelete({movie: movieName})
         })
         .catch((error) => {
           res.status(500).json({ error: 'Failed to delete related data from MovieBooked' });

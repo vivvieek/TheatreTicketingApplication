@@ -88,5 +88,13 @@
     </div>
 </div>
 
+<div class="cards-container d-flex justify-content-center"  > 
+    <div *ngFor="let item2 of reviews">
+        <div class="card-wrapper" *ngIf="item2.movie==item.name" >
+            <i class="bi bi-chat-right-quote" ><h6>""{{item2.review}}""<br><br>
+            -{{item2.username}}</h6></i>
+        </div>
+    </div>
+</div>
 
 <app-footer ></app-footer>

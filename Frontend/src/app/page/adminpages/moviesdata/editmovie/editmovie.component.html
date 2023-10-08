@@ -1,19 +1,33 @@
 <div class="row">
     <div class="col-md-12">
-      <form action="index.html" method="post" [formGroup]="editmovie" (ngSubmit)="onsubmit()">
+      <form action="index.html" method="post" [formGroup]="editmovie" (ngSubmit)="onsubmit()" enctype="multipart/form-data">
         <h1> Edit Movie </h1>
         <fieldset>
-            <label for="name">Movie Name:</label>
-            <input type="text" id="name" formControlName="name">
+            <div class="d-flex justify-content-center">
+                <img [src]="item.image" alt="item.name" height="200" width="200">
+            </div>
+            <!-- <span class="d-flex justify-content-center"><small>**Poster Cannot be Edited</small></span> -->
+
+            <label for="name">Movie Name: 
+                <span class="text-danger" *ngIf="editmovie.get('name')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('name')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <input type="text" id="name" formControlName="name" required>
             
-            <label>Select Category:</label>
+            <label>Select Category: 
+                <span class="text-danger" *ngIf="editmovie.get('category')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('category')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
                 <input type="radio" id="UA" value="UA"  formControlName="category"><label for="UA" class="light me-4">UA</label>
                 <input type="radio" id="A" value="A"  formControlName="category"><label for="A" class="light me-4">A</label>
                 <input type="radio" id="PG" value="PG"  formControlName="category"><label for="PG" class="light me-4">PG</label>
             <br><br>
 
-            <label for="language">Language:</label>
-            <select id="langiage" formControlName="language">
+            <label for="language">Language: 
+                <span class="text-danger" *ngIf="editmovie.get('language')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('language')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <select id="langiage" formControlName="language"  required>
                 <option value="Malayalam">Malayalam</option>
                 <option value="Hindi">Hindi</option>
                 <option value="Tamil">Tamil</option>
@@ -21,22 +35,40 @@
                 <option value="English">English</option>
             </select>
         
-            <label for="cast">Cast Details:</label>
-            <textarea id="cast" formControlName="cast"></textarea>
+            <label for="cast">Cast Details: 
+                <span class="text-danger" *ngIf="editmovie.get('cast')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('cast')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <textarea id="cast" formControlName="cast"  required></textarea>
 
-            <label for="description">Description:</label>
-            <textarea id="description" formControlName="description"  ></textarea>
+            <label for="description">Description: 
+                <span class="text-danger" *ngIf="editmovie.get('description')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('description')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <textarea id="description" formControlName="description"  required ></textarea>
 
-            <label for="rating">Rating:</label>
-            <input type="text" id="rating" formControlName="rating"  >
+            <label for="rating">Rating: (1-5) 
+                <span class="text-danger" *ngIf="editmovie.get('rating')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('rating')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <input type="text" id="rating" formControlName="rating"  required >
 
-            <label for="seats">Seats:</label>
-            <input type="text" id="seats" formControlName="seats" >
+            <label for="seats">Seats: (30-50) 
+                <span class="text-danger" *ngIf="editmovie.get('seats')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('seats')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
+            <input type="text" id="seats" formControlName="seats"  required >
 
-            <label for="price">Price:</label>
-            <input type="text" id="price" formControlName="price"  >
+            <label for="price">Price: (150-300) 
+                <span class="text-danger" *ngIf="editmovie.get('price')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('price')?.valid" ><i class="bi bi-dot"></i></span>
+              </label> 
+            <input type="text" id="price" formControlName="price"  required >
 
-            <label for="screen">Screen:</label>
+            <label for="screen">Screen: 
+                <span class="text-danger" *ngIf="editmovie.get('screen')?.invalid" ><i class="bi bi-dot"></i></span>
+                <span class="text-success" *ngIf="editmovie.get('screen')?.valid" ><i class="bi bi-dot"></i></span>
+            </label>
             <select id="screen" formControlName="screen" required  >
                 <option value="Screen 1">Screen 1</option>
                 <option value="Screen 2">Screen 2</option>
@@ -44,10 +76,10 @@
                 <option value="Screen 4">Screen 4</option>
                 <option value="Screen 5">Screen 5</option>
             </select>
-            
+
         </fieldset>
        
-        <button type="submit">Update</button>
+        <button type="submit" >Update</button>
         
        </form>
     </div>
