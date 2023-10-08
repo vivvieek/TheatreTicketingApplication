@@ -25,6 +25,10 @@ import { CommonModule } from '@angular/common';
 import { LoginService } from './servicefiles/login.service';
 import { DatasService } from './servicefiles/datas.service';
 
+import { TokeninterceptorService } from './servicefiles/tokeninterceptor.service';
+import { RoleGuard } from './servicefiles/auth.guard';
+import { ErrorComponent } from './page/error/error.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +44,7 @@ import { DatasService } from './servicefiles/datas.service';
     CustomerdataComponent,
     OffersComponent,
     RatingComponent,
-
+    ErrorComponent
 
   ],
   imports: [
@@ -54,7 +58,11 @@ import { DatasService } from './servicefiles/datas.service';
     
   ],
   providers: [LoginService,
-    DatasService],
+    DatasService,
+    RoleGuard,
+    {provide:HTTP_INTERCEPTORS,
+      useClass:TokeninterceptorService,
+      multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

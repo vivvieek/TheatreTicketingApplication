@@ -57,7 +57,7 @@ router.use(express.urlencoded({extended:true}));
 
 router.use('/images', express.static('images'));
 
-// Resgister User
+// Register User
 router.post('/adduser',(req,res)=>{
   // console.log(req.body);
   const newUser=new User({
@@ -84,7 +84,7 @@ router.post('/login',async(req,res)=>{
     var role='admin';
     if((email=='admin@email.com'&&pass=='admin123')){
       let payload={id:role,email:email};
-      let token=jwt.sign(payload,'secretkey');
+      let token=jwt.sign(payload,'secretKey');
       res.status(200).send({message:'Success',token:token});
     }
     else {
@@ -117,8 +117,22 @@ router.post('/login',async(req,res)=>{
   }
 })
 
+// token verification
+function verifytoken(req,res,next){
+  try {
+    if(!req.headers.authorization) throw 'Unauthorized';
+    let token=req.headers.authorization.split(' ')[1];
+    if(!token) throw 'Unauthorized';
+    let payload=jwt.verify(token,'secretKey');
+    if(!payload) throw 'Unauthorized';
+    next()
+  } catch (error) {
+    res.status(401).send('Error')
+  }
+}
+
 // View Customer Data
-router.get('/viewcus',(req,res)=>{
+router.get('/viewcus',verifytoken,(req,res)=>{
   User.find()
   .then((users)=>{
     res.status(200).json(users);
@@ -129,7 +143,7 @@ router.get('/viewcus',(req,res)=>{
 });
 
 // Delete Customer Data
-router.delete('/delcus/:id', async (req, res) => {
+router.delete('/delcus/:id',verifytoken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -147,7 +161,7 @@ router.delete('/delcus/:id', async (req, res) => {
 });
 
 // Add notification
-router.post('/addmess', (req,res)=>{
+router.post('/addmess',verifytoken, (req,res)=>{
   // console.log(req.body);
   const newNoti=new Noti({
     notificationmess:req.body.notificationmess
@@ -173,7 +187,7 @@ router.get('/viewmess',(req,res)=>{
 });
 
 // Delete notification
-router.delete('/deletemess/:_id',(req, res) => {
+router.delete('/deletemess/:_id',verifytoken,(req, res) => {
   Noti.findByIdAndRemove(req.params._id)
   .then((notification)=>{
     if (notification){
@@ -188,7 +202,7 @@ router.delete('/deletemess/:_id',(req, res) => {
 });
 
 // Add movie
-router.post('/addmovie', upload.single('image'), async (req, res) => {
+router.post('/addmovie',verifytoken, upload.single('image'), async (req, res) => {
   console.log(req.body);
   const url=req.protocol + '://' + req.get('host');
   try {
@@ -225,7 +239,7 @@ router.get('/viewmovie', async (req, res) => {
 });
 
 // Get one movie
-router.get('/getonemovie/:_id', async (req, res) => {
+router.get('/getonemovie/:_id',verifytoken, async (req, res) => {
   try {
     const movie = await Movie.findById(req.params._id);
     res.status(200).json(movie);
@@ -236,7 +250,7 @@ router.get('/getonemovie/:_id', async (req, res) => {
 });
 
 // Edit movie
-router.put('/editmovie/:_id', async (req, res) => {
+router.put('/editmovie/:_id',verifytoken, async (req, res) => {
   try {
       let id = req.params._id
       let updateData = {$set: req.body}
@@ -250,7 +264,7 @@ router.put('/editmovie/:_id', async (req, res) => {
 
 
 // Delete Movie
-router.delete('/deletemovie/:_id', (req, res) => {
+router.delete('/deletemovie/:_id',verifytoken, (req, res) => {
   Movie.findByIdAndRemove(req.params._id)
     .then((movie) => {
       if (!movie) {
@@ -277,7 +291,7 @@ router.delete('/deletemovie/:_id', (req, res) => {
 });
 
 // Book Movie
-router.put('/bookmovie/:_id', async (req, res) => {
+router.put('/bookmovie/:_id',verifytoken, async (req, res) => {
   try {
     let id = req.params._id;
     let updateData = req.body.updatedData;
@@ -325,7 +339,7 @@ router.put('/bookmovie/:_id', async (req, res) => {
 });
 
 // get bookeddata
-router.get('/bookeddata', async (req, res) => {
+router.get('/bookeddata',verifytoken, async (req, res) => {
   try {
     let useremail = req.query.user;
     console.log(useremail);
@@ -339,7 +353,7 @@ router.get('/bookeddata', async (req, res) => {
 });
 
 // Cancel booking
-router.delete('/cancelmovie/:_id', (req, res) => {
+router.delete('/cancelmovie/:_id',verifytoken, (req, res) => {
   let cancelledMovie;
   let cancelledseats;
   let user;
@@ -390,7 +404,7 @@ router.delete('/cancelmovie/:_id', (req, res) => {
 });
 
 // Rate Movie
-router.post('/addrating', (req,res)=>{
+router.post('/addrating',verifytoken, (req,res)=>{
   console.log(req.body);
   const newReview=new Review({
     username: req.body.user,
@@ -407,7 +421,7 @@ router.post('/addrating', (req,res)=>{
 })
 
 // Add Review
-router.post('/addreview', async (req, res) => {
+router.post('/addreview',verifytoken, async (req, res) => {
   try {
     const existingReview = await Review.findOne({
       username: req.body.data1,
@@ -432,7 +446,7 @@ router.post('/addreview', async (req, res) => {
 });
 
 // view all rating
-router.get('/getrating',(req,res)=>{
+router.get('/getrating',verifytoken,(req,res)=>{
   Review.find()
   .then((review)=>{
     res.status(200).json(review);
@@ -443,7 +457,7 @@ router.get('/getrating',(req,res)=>{
 });
 
 // Delete a rating
-router.delete('/deleterating/:_id',(req, res) => {
+router.delete('/deleterating/:_id',verifytoken,(req, res) => {
   Review.findByIdAndRemove(req.params._id)
   .then((review)=>{
     if (review){
@@ -457,19 +471,5 @@ router.delete('/deleterating/:_id',(req, res) => {
   });
 });
 
-
-// token verification
-// function verifytoken(req,res,next){
-//   try {
-//     if(!req.headers.authorization) throw 'Unauthorized';
-//     let token=req.headers.authorization.split(' ')[1];
-//     if(!token) throw 'Unauthorized';
-//     let payload=jwt.verify(token,'secretKey');
-//     if(!payload) throw 'Unauthorized';
-//     next()
-//   } catch (error) {
-//     res.status(401).send('Error')
-//   }
-// }
 
 module.exports = router
