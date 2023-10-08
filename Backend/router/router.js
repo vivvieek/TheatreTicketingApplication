@@ -58,7 +58,8 @@ router.use(express.urlencoded({extended:true}));
 router.use('/images', express.static('images'));
 
 // Register User
-router.post('/api/adduser',(req,res)=>{
+router.post('/adduser',(req,res)=>{
+  // console.log(req.body);
   const newUser=new User({
     name:req.body.name,
     email:req.body.email,
@@ -76,7 +77,7 @@ router.post('/api/adduser',(req,res)=>{
 })
 
 // Login
-router.post('/api/login',async(req,res)=>{
+router.post('/login',async(req,res)=>{
   try {
     var email=req.body.emailInput;
     var pass=req.body.passwordInput;
@@ -131,7 +132,7 @@ function verifytoken(req,res,next){
 }
 
 // View Customer Data
-router.get('/api/viewcus',verifytoken,(req,res)=>{
+router.get('/viewcus',verifytoken,(req,res)=>{
   User.find()
   .then((users)=>{
     res.status(200).json(users);
@@ -142,7 +143,7 @@ router.get('/api/viewcus',verifytoken,(req,res)=>{
 });
 
 // Delete Customer Data
-router.delete('/api/delcus/:id',verifytoken, async (req, res) => {
+router.delete('/delcus/:id',verifytoken, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -160,7 +161,7 @@ router.delete('/api/delcus/:id',verifytoken, async (req, res) => {
 });
 
 // Add notification
-router.post('/api/addmess',verifytoken, (req,res)=>{
+router.post('/addmess',verifytoken, (req,res)=>{
   // console.log(req.body);
   const newNoti=new Noti({
     notificationmess:req.body.notificationmess
@@ -175,7 +176,7 @@ router.post('/api/addmess',verifytoken, (req,res)=>{
 })
 
 // View notification
-router.get('/api/viewmess',(req,res)=>{
+router.get('/viewmess',(req,res)=>{
   Noti.find()
   .then((notification)=>{
     res.status(200).json(notification);
@@ -186,7 +187,7 @@ router.get('/api/viewmess',(req,res)=>{
 });
 
 // Delete notification
-router.delete('/api/deletemess/:_id',verifytoken,(req, res) => {
+router.delete('/deletemess/:_id',verifytoken,(req, res) => {
   Noti.findByIdAndRemove(req.params._id)
   .then((notification)=>{
     if (notification){
@@ -201,7 +202,7 @@ router.delete('/api/deletemess/:_id',verifytoken,(req, res) => {
 });
 
 // Add movie
-router.post('/api/addmovie',verifytoken, upload.single('image'), async (req, res) => {
+router.post('/addmovie',verifytoken, upload.single('image'), async (req, res) => {
   console.log(req.body);
   const url=req.protocol + '://' + req.get('host');
   try {
@@ -227,7 +228,7 @@ router.post('/api/addmovie',verifytoken, upload.single('image'), async (req, res
 });
 
 // View all movies
-router.get('/api/viewmovie', async (req, res) => {
+router.get('/viewmovie', async (req, res) => {
   try {
     const movies = await Movie.find();
     res.json(movies);
@@ -238,7 +239,7 @@ router.get('/api/viewmovie', async (req, res) => {
 });
 
 // Get one movie
-router.get('/api/getonemovie/:_id',verifytoken, async (req, res) => {
+router.get('/getonemovie/:_id',verifytoken, async (req, res) => {
   try {
     const movie = await Movie.findById(req.params._id);
     res.status(200).json(movie);
@@ -249,7 +250,7 @@ router.get('/api/getonemovie/:_id',verifytoken, async (req, res) => {
 });
 
 // Edit movie
-router.put('/api/editmovie/:_id',verifytoken, async (req, res) => {
+router.put('/editmovie/:_id',verifytoken, async (req, res) => {
   try {
       let id = req.params._id
       let updateData = {$set: req.body}
@@ -263,7 +264,7 @@ router.put('/api/editmovie/:_id',verifytoken, async (req, res) => {
 
 
 // Delete Movie
-router.delete('/api/deletemovie/:_id',verifytoken, (req, res) => {
+router.delete('/deletemovie/:_id',verifytoken, (req, res) => {
   Movie.findByIdAndRemove(req.params._id)
     .then((movie) => {
       if (!movie) {
@@ -290,7 +291,7 @@ router.delete('/api/deletemovie/:_id',verifytoken, (req, res) => {
 });
 
 // Book Movie
-router.put('/api/bookmovie/:_id',verifytoken, async (req, res) => {
+router.put('/bookmovie/:_id',verifytoken, async (req, res) => {
   try {
     let id = req.params._id;
     let updateData = req.body.updatedData;
@@ -338,7 +339,7 @@ router.put('/api/bookmovie/:_id',verifytoken, async (req, res) => {
 });
 
 // get bookeddata
-router.get('/api/bookeddata',verifytoken, async (req, res) => {
+router.get('/bookeddata',verifytoken, async (req, res) => {
   try {
     let useremail = req.query.user;
     console.log(useremail);
@@ -352,7 +353,7 @@ router.get('/api/bookeddata',verifytoken, async (req, res) => {
 });
 
 // Cancel booking
-router.delete('/api/cancelmovie/:_id',verifytoken, (req, res) => {
+router.delete('/cancelmovie/:_id',verifytoken, (req, res) => {
   let cancelledMovie;
   let cancelledseats;
   let user;
@@ -403,7 +404,7 @@ router.delete('/api/cancelmovie/:_id',verifytoken, (req, res) => {
 });
 
 // Rate Movie
-router.post('/api/addrating',verifytoken, (req,res)=>{
+router.post('/addrating',verifytoken, (req,res)=>{
   console.log(req.body);
   const newReview=new Review({
     username: req.body.user,
@@ -420,7 +421,7 @@ router.post('/api/addrating',verifytoken, (req,res)=>{
 })
 
 // Add Review
-router.post('/api/addreview',verifytoken, async (req, res) => {
+router.post('/addreview',verifytoken, async (req, res) => {
   try {
     const existingReview = await Review.findOne({
       username: req.body.data1,
@@ -445,7 +446,7 @@ router.post('/api/addreview',verifytoken, async (req, res) => {
 });
 
 // view all rating
-router.get('/api/getrating',verifytoken,(req,res)=>{
+router.get('/getrating',verifytoken,(req,res)=>{
   Review.find()
   .then((review)=>{
     res.status(200).json(review);
@@ -456,7 +457,7 @@ router.get('/api/getrating',verifytoken,(req,res)=>{
 });
 
 // Delete a rating
-router.delete('/api/deleterating/:_id',verifytoken,(req, res) => {
+router.delete('/deleterating/:_id',verifytoken,(req, res) => {
   Review.findByIdAndRemove(req.params._id)
   .then((review)=>{
     if (review){

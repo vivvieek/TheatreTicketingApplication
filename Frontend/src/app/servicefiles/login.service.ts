@@ -8,18 +8,16 @@ import jwtDecode from 'jwt-decode'
 })
 export class LoginService {
 
-  server_address:string='api';
-
   constructor(public http:HttpClient) { }
 
   // Registration
   adduser(data:any){
-    return this.http.post<any>(`${this.server_address}/adduser`,data);
+    return this.http.post<any>('http://localhost:3000/adduser',data);
   }
 
   // Login
   login(data:any){
-    return this.http.post<any>(`${this.server_address}/login`,data).pipe(
+    return this.http.post<any>('http://localhost:3000/login',data).pipe(
       tap((res)=>{
         if(res.token){
           localStorage.setItem('token',res.token);
